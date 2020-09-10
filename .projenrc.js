@@ -10,6 +10,9 @@ const project = new ConstructLibraryAws({
   "name": "cdk-k3s-cluster",
   "repository": "https://github.com/aws-samples/aws-cdk-for-k3scluster",
   "description": PROJECT_DESCRIPTION,
+  "license": "MIT",
+  "copyrightOwner": "AWS Samples",
+  "copyrightPeriod": "2020",
   "keywords": [
     'aws',
     'kubernetes',
