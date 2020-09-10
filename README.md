@@ -1,6 +1,6 @@
 [![NPM version](https://badge.fury.io/js/cdk-k3s-cluster.svg)](https://badge.fury.io/js/cdk-k3s-cluster)
 [![PyPI version](https://badge.fury.io/py/cdk-k3s-cluster.svg)](https://badge.fury.io/py/cdk-k3s-cluster)
-![Release](https://github.com/pahud/aws-cdk-for-k3scluster/workflows/Release/badge.svg)
+![Release](https://github.com/aws-samples/aws-cdk-for-k3scluster/workflows/Release/badge.svg)
 
 ## What is cdk-k3s-cluster?
 
