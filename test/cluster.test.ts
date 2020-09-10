@@ -20,4 +20,5 @@ test('create the default cluster', () => {
       Ref: 'ClusterWorkerAsgLaunchConfig70B7BCB1',
     }})
 
-});
+  expect(stack).toHaveResource('AWS::AutoScaling::LaunchConfiguration')
+})
