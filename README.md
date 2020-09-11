@@ -57,6 +57,10 @@ ip-172-31-18-126.us-west-2.compute.internal   Ready    <none>   8s      v1.16.13
 ip-172-31-60-174.us-west-2.compute.internal   Ready    <none>   1s      v1.16.13+k3s1
 ```
 
+### How does this relate to EKS 
+
+It doesn't. As noted above, `cdk-k3s-cluster` is just yet another experimental and peculiar way to run Kubernetes on AWS.
+
 
 ## What are the running costs for a cluster built with cdk-k3s-cluster?
 
@@ -67,29 +71,26 @@ A *100 worker nodes cluster* (or 101 vCPUs and 404GB of memory) would be *$0.017
 This does not include, for example, the costs of the S3 bucket (probably marginal) or network traffic. 
 
 
-### How does this relate to EKS 
-
-It doesn't. As noted above, `cdk-k3s-cluster` is just yet another experimental and peculiar way to run Kubernetes on AWS.
-
-
 ## Getting started
 
 `cdk-k3s-cluster` is available in both `NPM` and `PyPi` modules ready to be imported into your CDK program. 
 
-This is an example of how to consume the `NPM` module with a CDK application written in Typescript:
+### I am a Typescript type of person 
+
+This is an example of how to consume the `NPM` module with a CDK application written in Typescript. If you need to setup your Typescript environment [this is a good guide](https://docs.aws.amazon.com/cdk/latest/guide/work-with-cdk-typescript.html).
 
 ```
-$ mkdir myk3scluster
+$ mkdir myk3scluster-typescript
+$ cd myk3scluster-typescript
 # initialize the AWS CDK project
 $ cdk init -l typescript
 # install the cdk-k3s-cluster npm module
 $ yarn add cdk-k3s-cluster
 ```
 
-Update your ./lib/cdk-stack.ts file with the following content: 
+Update your `./bin/myk3scluster-typescript.ts` file with the following content. Note how, in this example, we are using all of the properties available today:
 
 ```
-import 'source-map-support/register';
 import * as cdk from '@aws-cdk/core';
 import * as ec2 from '@aws-cdk/aws-ec2';
 import * as k3s from 'cdk-k3s-cluster';
@@ -111,6 +112,42 @@ new k3s.Cluster(stack, 'Cluster', {
   controlPlaneInstanceType: new ec2.InstanceType('m6g.medium')
 })
 ```
+
+### I am a Python type of person 
+
+This is an example of how to consume the `PyPi` module with a CDK application written in Typescript. If you need to setup your Python environment [this is a good guide](https://docs.aws.amazon.com/cdk/latest/guide/work-with-cdk-python.html).
+
+```
+$ mkdir myk3scluster-python
+$ cd myk3scluster-python
+# initialize the AWS CDK project
+$ cdk init -l python
+# activate the Python virtual environment
+$ source .env/bin/activate
+# install the dependencies
+$ pip install cdk-k3s-cluster
+```
+
+Update your `./app.py` file with the following content. Note how, in this example, we are only using two of the parameters available. To use all the defaults you could use `cluster = k3s.Cluster(self, "MyK3sClusters")`: 
+
+```
+#!/usr/bin/env python3
+
+from aws_cdk import core
+import cdk_k3s_cluster as k3s
+
+class K3sCluster(core.Stack):    
+    def __init__(self, scope: core.Construct, id: str, **kwargs):
+        super().__init__(scope, id, **kwargs)
+        k3s.Cluster(self, "MyK3sClusters", worker_min_capacity=5, spot_worker_nodes=True) 
+
+app = core.App()
+K3sCluster(app, "K3sCluster") 
+app.synth()
+```
+
+
+### Deploying the stack (regardless of the language you have used) 
 
 deploy the CDK stack:
 
