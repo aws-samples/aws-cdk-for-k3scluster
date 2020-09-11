@@ -13,13 +13,13 @@
 
 ## How do you deploy and consume cdk-k3s-cluster?
 
-### The Cluster API 
+### The cdk-k3s-cluster Cluster API 
 
-The `Cluster` API available in the `cdk-k3s-cluster` library allows you to build the k3s cluster on AWS with AWS CDK. This library is currently available in both `NPM` and `PyPi`.
+The `Cluster` API available in the `cdk-k3s-cluster` library, not to be confused with the Kubernetes Cluster API project, allows you to build the k3s cluster on AWS with AWS CDK. This library is currently available in both `NPM` and `PyPi`.
 
-To create a default cluster: 
+Creating a default cluster could be as simple as: 
 
-```ts
+```typescript
 import * as k3s from 'cdk-k3s-cluster'
 
 new k3s.Cluster(stack, 'Cluster')
