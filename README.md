@@ -45,11 +45,11 @@ Once the `cdk-k3s-cluster` has been deployed, this a high level view of the cons
 
 This is an example of the cluster consumption user experience using the `aws cli` (used to copy the `kubeconfig` file from S3) and `kubectl`:
 
-```
-sh-4.2# aws s3 cp s3://k3sCluster-clusterk3sbucketxxxxxxxxxxxxx/kubeconfig.yaml .                                                                                                                     
+```bash
+$ aws s3 cp s3://k3sCluster-clusterk3sbucketxxxxxxxxxxxxx/kubeconfig.yaml .                                                                                                                     
 download: s3://k3sCluster-clusterk3sbucketxxxxxxxxxxxxx/kubeconfig.yaml to ./kubeconfig.yaml
 
-sh-4.2# kubectl get nodes --kubeconfig=./kubeconfig.yaml 
+$ kubectl get nodes --kubeconfig=./kubeconfig.yaml 
 NAME                                          STATUS   ROLES    AGE     VERSION
 ip-172-31-43-198.us-west-2.compute.internal   Ready    master   2m49s   v1.16.9+k3s1
 ip-172-31-10-252.us-west-2.compute.internal   Ready    <none>   15s     v1.16.13+k3s1
@@ -79,7 +79,7 @@ This does not include, for example, the costs of the S3 bucket (probably margina
 
 This is an example of how to consume the `NPM` module with a CDK application written in Typescript. If you need to setup your Typescript environment [this is a good guide](https://docs.aws.amazon.com/cdk/latest/guide/work-with-cdk-typescript.html).
 
-```
+```bash
 $ mkdir myk3scluster-typescript
 $ cd myk3scluster-typescript
 # initialize the AWS CDK project
@@ -90,7 +90,7 @@ $ yarn add cdk-k3s-cluster
 
 Update your `./bin/myk3scluster-typescript.ts` file with the following content. Note how, in this example, we are using all of the properties available today:
 
-```
+```typescript
 import * as cdk from '@aws-cdk/core';
 import * as ec2 from '@aws-cdk/aws-ec2';
 import * as k3s from 'cdk-k3s-cluster';
@@ -117,7 +117,7 @@ new k3s.Cluster(stack, 'Cluster', {
 
 This is an example of how to consume the `PyPi` module with a CDK application written in Typescript. If you need to setup your Python environment [this is a good guide](https://docs.aws.amazon.com/cdk/latest/guide/work-with-cdk-python.html).
 
-```
+```bash
 $ mkdir myk3scluster-python
 $ cd myk3scluster-python
 # initialize the AWS CDK project
@@ -130,7 +130,7 @@ $ pip install cdk-k3s-cluster
 
 Update your `./app.py` file with the following content. Note how, in this example, we are only using two of the parameters available. To use all the defaults you could use `cluster = k3s.Cluster(self, "MyK3sClusters")`: 
 
-```
+```python
 #!/usr/bin/env python3
 
 from aws_cdk import core
@@ -151,7 +151,7 @@ app.synth()
 
 deploy the CDK stack:
 
-```
+```bash
 # see the difference before the deployment
 $ cdk diff
 # deploy it
