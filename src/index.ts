@@ -3,6 +3,10 @@ import * as ec2 from '@aws-cdk/aws-ec2';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as iam from '@aws-cdk/aws-iam';
 import * as autoscaling from '@aws-cdk/aws-autoscaling';
+import * as lambda from '@aws-cdk/aws-lambda';
+import * as logs from '@aws-cdk/aws-logs';
+import * as cr from '@aws-cdk/custom-resources';
+import * as path from 'path';
 
 const DEFAULT_INSTANCE_TYPE = ec2.InstanceType.of(ec2.InstanceClass.M6G, ec2.InstanceSize.MEDIUM)
 
@@ -70,6 +74,30 @@ export class Cluster extends cdk.Construct {
     const k3sBucket = new s3.Bucket(this, 'k3sBucket', {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
+
+    // Delete S3 Object CustomResource
+    const onEvent = new lambda.Function(this, 'onEventHandler', {
+      runtime: lambda.Runtime.PYTHON_3_8,
+      code: lambda.Code.fromAsset(path.join(__dirname, '../custom-resource-handler')),
+      handler: 'index.on_event',
+    });
+
+    const deleteS3ObjectProvider = new cr.Provider(this, 'deleteS3ObjectProvider', {
+      onEventHandler: onEvent,
+      logRetention: logs.RetentionDays.ONE_DAY,
+    });
+
+    const CRdeleteS3ObjectProvider = new cdk.CustomResource(this, 'CRdeleteS3ObjectProvider', {
+      serviceToken: deleteS3ObjectProvider.serviceToken,
+      properties: {
+        Bucket: k3sBucket.bucketName,
+      },
+    });
+
+    CRdeleteS3ObjectProvider.node.addDependency(k3sBucket)
+
+    k3sBucket.grantDelete(onEvent);
+    k3sBucket.grantReadWrite(onEvent);
 
     // control plane node Security Group      
     const k3scontrolplanesg = new ec2.SecurityGroup(this, 'k3s-controlplane-SG', {

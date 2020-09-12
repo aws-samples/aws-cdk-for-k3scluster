@@ -21,4 +21,11 @@ test('create the default cluster', () => {
     }})
 
   expect(stack).toHaveResource('AWS::AutoScaling::LaunchConfiguration')
-})
+});
+
+test('add s3 removalPolicy', () => {
+  const app = new App();
+  const stack = new Stack(app, 'testing-stack');
+  new k3s.Cluster(stack, 'Cluster-s3-removalPolicy')
+  expect(stack).toHaveResource('AWS::S3::Bucket');
+});

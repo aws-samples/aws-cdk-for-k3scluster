@@ -68,6 +68,19 @@
     "@aws-cdk/core" "1.62.0"
     constructs "^3.0.4"
 
+"@aws-cdk/aws-cloudformation@1.62.0":
+  version "1.62.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-cloudformation/-/aws-cloudformation-1.62.0.tgz#3c809b6e409ba79e31ed73787f5db7c1042371e0"
+  integrity sha512-qJawcXG9tMNsZlIO9Sm+6N0jn81kipJaGA436fHFI35UpViftgmVKba0XNT9INik80iVCUA7cdLlOv9+Azw2KQ==
+  dependencies:
+    "@aws-cdk/aws-iam" "1.62.0"
+    "@aws-cdk/aws-lambda" "1.62.0"
+    "@aws-cdk/aws-s3" "1.62.0"
+    "@aws-cdk/aws-sns" "1.62.0"
+    "@aws-cdk/core" "1.62.0"
+    "@aws-cdk/cx-api" "1.62.0"
+    constructs "^3.0.4"
+
 "@aws-cdk/aws-cloudwatch@1.62.0":
   version "1.62.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-cloudwatch/-/aws-cloudwatch-1.62.0.tgz#b5a0fb3d2394d0aaf252507c6e3e43a10821f70d"
@@ -166,7 +179,7 @@
     "@aws-cdk/core" "1.62.0"
     constructs "^3.0.4"
 
-"@aws-cdk/aws-lambda@1.62.0":
+"@aws-cdk/aws-lambda@1.62.0", "@aws-cdk/aws-lambda@^1.62.0":
   version "1.62.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-lambda/-/aws-lambda-1.62.0.tgz#ab5a25de0079d38d5f41eb201f36974b19530f15"
   integrity sha512-zPaggXhMX1+HBiVsF3jWMvlZ0OL/E0TOsETn0poOcn4on9NOEJz0CRMo4QrzjB8q2XyIWb4Hn0fDrrVAAxawcw==
@@ -186,7 +199,7 @@
     "@aws-cdk/cx-api" "1.62.0"
     constructs "^3.0.4"
 
-"@aws-cdk/aws-logs@1.62.0":
+"@aws-cdk/aws-logs@1.62.0", "@aws-cdk/aws-logs@^1.62.0":
   version "1.62.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-logs/-/aws-logs-1.62.0.tgz#0a70ddb1c49ee2b7cb30b50fd9f6fcb512aba67c"
   integrity sha512-s2nXP3SELiWmZ3IrvaEYFQauYqeSwmD3ZW2tC1q3h9qABBG/oAdKYhDGiNy9wZi5x/bfNudF/kQxv9NlsQm3Ig==
@@ -304,6 +317,19 @@
     constructs "^3.0.4"
     fs-extra "^9.0.1"
     minimatch "^3.0.4"
+
+"@aws-cdk/custom-resources@^1.62.0":
+  version "1.62.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/custom-resources/-/custom-resources-1.62.0.tgz#306f6dffcb21070ab6a96231f7867ffaae51649d"
+  integrity sha512-CE7cR+Ybpk/HT4D8BLEvIl2GMzMAfyrq5sPrFZQWkRwHE4tGG8ztsnMnp6/dBJ7ngges2ezckbdVyomfJcVN2g==
+  dependencies:
+    "@aws-cdk/aws-cloudformation" "1.62.0"
+    "@aws-cdk/aws-iam" "1.62.0"
+    "@aws-cdk/aws-lambda" "1.62.0"
+    "@aws-cdk/aws-logs" "1.62.0"
+    "@aws-cdk/aws-sns" "1.62.0"
+    "@aws-cdk/core" "1.62.0"
+    constructs "^3.0.4"
 
 "@aws-cdk/cx-api@1.62.0":
   version "1.62.0"
