@@ -68,6 +68,7 @@ export class Cluster extends cdk.Construct {
     
     // S3 bucket to host K3s token + kubeconfig file 
     const k3sBucket = new s3.Bucket(this, 'k3sBucket', {
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
     // control plane node Security Group      
