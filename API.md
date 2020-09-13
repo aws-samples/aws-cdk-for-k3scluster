@@ -62,7 +62,7 @@ new Cluster(scope: Construct, id: string, props?: ClusterProps)
 * **scope** (<code>[Construct](#aws-cdk-core-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
 * **props** (<code>[ClusterProps](#cdk-k3s-cluster-clusterprops)</code>)  *No description*
-  * **bucketRemovalPolicy** (<code>[RemovalPolicy](#aws-cdk-core-removalpolicy)</code>)  bucket Removal Policy. __*Default*__: cdk.RemovalPolicy.RETAIN
+  * **bucketRemovalPolicy** (<code>[RemovalPolicy](#aws-cdk-core-removalpolicy)</code>)  The bucket removal policy. __*Default*__: cdk.RemovalPolicy.RETAIN
   * **controlPlaneInstanceType** (<code>[InstanceType](#aws-cdk-aws-ec2-instancetype)</code>)  control plane node ec2 instance type. __*Optional*__
   * **spotWorkerNodes** (<code>boolean</code>)  Run worker nodes as EC2 Spot. __*Optional*__
   * **vpc** (<code>[IVpc](#aws-cdk-aws-ec2-ivpc)</code>)  VPC. __*Optional*__
@@ -125,7 +125,7 @@ __Returns__:
 
 Name | Type | Description 
 -----|------|-------------
-**bucketRemovalPolicy**? | <code>[RemovalPolicy](#aws-cdk-core-removalpolicy)</code> | bucket Removal Policy.<br/>__*Default*__: cdk.RemovalPolicy.RETAIN
+**bucketRemovalPolicy**? | <code>[RemovalPolicy](#aws-cdk-core-removalpolicy)</code> | The bucket removal policy.<br/>__*Default*__: cdk.RemovalPolicy.RETAIN
 **controlPlaneInstanceType**? | <code>[InstanceType](#aws-cdk-aws-ec2-instancetype)</code> | control plane node ec2 instance type.<br/>__*Optional*__
 **spotWorkerNodes**? | <code>boolean</code> | Run worker nodes as EC2 Spot.<br/>__*Optional*__
 **vpc**? | <code>[IVpc](#aws-cdk-aws-ec2-ivpc)</code> | VPC.<br/>__*Optional*__
