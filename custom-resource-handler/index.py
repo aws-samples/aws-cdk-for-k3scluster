@@ -26,8 +26,9 @@ def on_delete(event):
 
     s3 = boto3.resource('s3')
     bucket = s3.Bucket(k3sBucket_name)
-    for obj in bucket.objects.filter():
-        s3.Object(bucket.name, obj.key).delete()
+    # see - https://boto3.amazonaws.com/v1/documentation/api/latest/guide/migrations3.html
+    for key in bucket.objects.all():
+        key.delete()
     output = {'Status': 'success'}
     
     print(output)
