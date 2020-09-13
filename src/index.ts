@@ -44,7 +44,8 @@ export interface ClusterProps {
   readonly workerMinCapacity?: number;
 
   /**
-   * bucket Removal Policy
+   * The bucket Removal Policy. When specicified as `DESTROY`, the S3 bucket for the cluster state
+   * will be completed removed on stack destroy.
    * 
    * @default - cdk.RemovalPolicy.RETAIN
    */
