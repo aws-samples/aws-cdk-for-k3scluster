@@ -43,6 +43,13 @@ export interface ClusterProps {
    */
   readonly workerMinCapacity?: number;
 
+  /**
+   * bucket Removal Policy
+   * 
+   * @default - cdk.RemovalPolicy.RETAIN
+   */
+  readonly bucketRemovalPolicy?: cdk.RemovalPolicy;
+
 }
 
 /**
@@ -72,32 +79,34 @@ export class Cluster extends cdk.Construct {
     
     // S3 bucket to host K3s token + kubeconfig file 
     const k3sBucket = new s3.Bucket(this, 'k3sBucket', {
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      removalPolicy: props.bucketRemovalPolicy ?? cdk.RemovalPolicy.RETAIN,
     });
 
     // Delete S3 Object CustomResource
-    const onEvent = new lambda.Function(this, 'onEventHandler', {
-      runtime: lambda.Runtime.PYTHON_3_8,
-      code: lambda.Code.fromAsset(path.join(__dirname, '../custom-resource-handler')),
-      handler: 'index.on_event',
-    });
-
-    const deleteS3ObjectProvider = new cr.Provider(this, 'deleteS3ObjectProvider', {
-      onEventHandler: onEvent,
-      logRetention: logs.RetentionDays.ONE_DAY,
-    });
-
-    const CRdeleteS3ObjectProvider = new cdk.CustomResource(this, 'CRdeleteS3ObjectProvider', {
-      serviceToken: deleteS3ObjectProvider.serviceToken,
-      properties: {
-        Bucket: k3sBucket.bucketName,
-      },
-    });
-
-    CRdeleteS3ObjectProvider.node.addDependency(k3sBucket)
-
-    k3sBucket.grantDelete(onEvent);
-    k3sBucket.grantReadWrite(onEvent);
+    if(props.bucketRemovalPolicy === cdk.RemovalPolicy.DESTROY){
+      const onEvent = new lambda.Function(this, 'onEventHandler', {
+        runtime: lambda.Runtime.PYTHON_3_8,
+        code: lambda.Code.fromAsset(path.join(__dirname, '../custom-resource-handler')),
+        handler: 'index.on_event',
+      });
+  
+      const deleteS3ObjectProvider = new cr.Provider(this, 'deleteS3ObjectProvider', {
+        onEventHandler: onEvent,
+        logRetention: logs.RetentionDays.ONE_DAY,
+      });
+  
+      const CRdeleteS3ObjectProvider = new cdk.CustomResource(this, 'CRdeleteS3ObjectProvider', {
+        serviceToken: deleteS3ObjectProvider.serviceToken,
+        properties: {
+          Bucket: k3sBucket.bucketName,
+        },
+      });
+  
+      CRdeleteS3ObjectProvider.node.addDependency(k3sBucket)
+  
+      k3sBucket.grantDelete(onEvent);
+      k3sBucket.grantReadWrite(onEvent);
+    }
 
     // control plane node Security Group      
     const k3scontrolplanesg = new ec2.SecurityGroup(this, 'k3s-controlplane-SG', {
