@@ -63,10 +63,10 @@ new Cluster(scope: Construct, id: string, props?: ClusterProps)
 * **id** (<code>string</code>)  *No description*
 * **props** (<code>[ClusterProps](#cdk-k3s-cluster-clusterprops)</code>)  *No description*
   * **bucketRemovalPolicy** (<code>[RemovalPolicy](#aws-cdk-core-removalpolicy)</code>)  The bucket removal policy. __*Default*__: cdk.RemovalPolicy.RETAIN
-  * **controlPlaneInstanceType** (<code>[InstanceType](#aws-cdk-aws-ec2-instancetype)</code>)  control plane node ec2 instance type. __*Optional*__
-  * **spotWorkerNodes** (<code>boolean</code>)  Run worker nodes as EC2 Spot. __*Optional*__
-  * **vpc** (<code>[IVpc](#aws-cdk-aws-ec2-ivpc)</code>)  VPC. __*Optional*__
-  * **workerInstanceType** (<code>[InstanceType](#aws-cdk-aws-ec2-instancetype)</code>)  worker node instance type. __*Optional*__
+  * **controlPlaneInstanceType** (<code>[InstanceType](#aws-cdk-aws-ec2-instancetype)</code>)  control plane node ec2 instance type. __*Default*__: mg6.medium
+  * **spotWorkerNodes** (<code>boolean</code>)  Run worker nodes as EC2 Spot. __*Default*__: true
+  * **vpc** (<code>[IVpc](#aws-cdk-aws-ec2-ivpc)</code>)  VPC. __*Default*__: create new VPC
+  * **workerInstanceType** (<code>[InstanceType](#aws-cdk-aws-ec2-instancetype)</code>)  worker node instance type. __*Default*__: mg6.medium
   * **workerMinCapacity** (<code>number</code>)  minimal number of worker nodes. __*Default*__: 3
 
 
@@ -126,10 +126,10 @@ __Returns__:
 Name | Type | Description 
 -----|------|-------------
 **bucketRemovalPolicy**? | <code>[RemovalPolicy](#aws-cdk-core-removalpolicy)</code> | The bucket removal policy.<br/>__*Default*__: cdk.RemovalPolicy.RETAIN
-**controlPlaneInstanceType**? | <code>[InstanceType](#aws-cdk-aws-ec2-instancetype)</code> | control plane node ec2 instance type.<br/>__*Optional*__
-**spotWorkerNodes**? | <code>boolean</code> | Run worker nodes as EC2 Spot.<br/>__*Optional*__
-**vpc**? | <code>[IVpc](#aws-cdk-aws-ec2-ivpc)</code> | VPC.<br/>__*Optional*__
-**workerInstanceType**? | <code>[InstanceType](#aws-cdk-aws-ec2-instancetype)</code> | worker node instance type.<br/>__*Optional*__
+**controlPlaneInstanceType**? | <code>[InstanceType](#aws-cdk-aws-ec2-instancetype)</code> | control plane node ec2 instance type.<br/>__*Default*__: mg6.medium
+**spotWorkerNodes**? | <code>boolean</code> | Run worker nodes as EC2 Spot.<br/>__*Default*__: true
+**vpc**? | <code>[IVpc](#aws-cdk-aws-ec2-ivpc)</code> | VPC.<br/>__*Default*__: create new VPC
+**workerInstanceType**? | <code>[InstanceType](#aws-cdk-aws-ec2-instancetype)</code> | worker node instance type.<br/>__*Default*__: mg6.medium
 **workerMinCapacity**? | <code>number</code> | minimal number of worker nodes.<br/>__*Default*__: 3
 
 
