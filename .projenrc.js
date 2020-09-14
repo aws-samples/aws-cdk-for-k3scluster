@@ -35,6 +35,9 @@ const project = new ConstructLibraryAws({
     '@aws-cdk/aws-s3',
     '@aws-cdk/aws-iam',
     '@aws-cdk/aws-autoscaling',
+    '@aws-cdk/custom-resources',
+    '@aws-cdk/aws-logs',
+    '@aws-cdk/aws-lambda',
   ],
   
   python: {

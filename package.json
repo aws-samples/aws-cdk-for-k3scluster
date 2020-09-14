@@ -57,16 +57,22 @@
     "@aws-cdk/aws-autoscaling": "^1.62.0",
     "@aws-cdk/aws-ec2": "^1.62.0",
     "@aws-cdk/aws-iam": "^1.62.0",
+    "@aws-cdk/aws-lambda": "^1.62.0",
+    "@aws-cdk/aws-logs": "^1.62.0",
     "@aws-cdk/aws-s3": "^1.62.0",
     "@aws-cdk/core": "^1.62.0",
+    "@aws-cdk/custom-resources": "^1.62.0",
     "constructs": "^3.0.4"
   },
   "dependencies": {
     "@aws-cdk/aws-autoscaling": "^1.62.0",
     "@aws-cdk/aws-ec2": "^1.62.0",
     "@aws-cdk/aws-iam": "^1.62.0",
+    "@aws-cdk/aws-lambda": "^1.62.0",
+    "@aws-cdk/aws-logs": "^1.62.0",
     "@aws-cdk/aws-s3": "^1.62.0",
-    "@aws-cdk/core": "^1.62.0"
+    "@aws-cdk/core": "^1.62.0",
+    "@aws-cdk/custom-resources": "^1.62.0"
   },
   "bundledDependencies": [],
   "keywords": [
