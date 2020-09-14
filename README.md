@@ -88,7 +88,7 @@ $ cdk init -l typescript
 $ yarn add cdk-k3s-cluster
 ```
 
-Update your `./bin/myk3scluster-typescript.ts` file with the following content. Note how, in this example, we are using all of the properties available today:
+Update your `./bin/myk3scluster-typescript.ts` file with the following content. 
 
 ```typescript
 import * as cdk from '@aws-cdk/core';
@@ -110,8 +110,11 @@ new k3s.Cluster(stack, 'Cluster', {
   workerMinCapacity: 3,
   workerInstanceType: new ec2.InstanceType('m6g.medium'),
   controlPlaneInstanceType: new ec2.InstanceType('m6g.medium')
+  bucketRemovalPolicy: cdk.RemovalPolicy.DESTROY
 })
 ```
+In this `typescript` example, we are using all of the properties available today. Note that we set the bucket removal policy to `DESTROY` (this will remove completely the S3 bucket - the safe default behavior is to leave the bucket in the account). For an up to date list of all the properties please refer to the `API.md` file in this repo.
+
 
 ### I am a Python type of person 
 
@@ -164,6 +167,7 @@ If you want to deploy in an existing VPC use either `cdk deploy --context use_de
 
 Cleaning up the environment is as easy as running `cdk destroy` from where you left your prompt. 
 
+
 ## Known issues and limitations
 
 * First and foremost this is a learning experiment. I have done limited tests with it. 
@@ -175,8 +179,6 @@ Cleaning up the environment is as easy as running `cdk destroy` from where you l
 * The two options you have for instances are `m6g.medium` and `m6g.large`. If you want to add another instance choice you probably need to add/tweak the PriceMap in `cdk-stack.ts`. I have not tested it 
 
 * `cdk-k3s-cluster` only deploys Arm-based instances. It would be trivial to add x86 based instances support but it's not there today 
-
-* When you destroy the stack the S3 bucket will be left undeleted. This is by design and you need to delete manually.
 
 * All the control plane and worker nodes are deployed in public subnets and the SGs are fairly permissive in terms of "source". Picking private subnets would have probably broken the use case of deploying into the `default` VPC (which is handy). This prototype over-indexes more on deployment convenience and ease of use than on best practices. 
 

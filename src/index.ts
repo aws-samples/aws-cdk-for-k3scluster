@@ -18,21 +18,29 @@ let PriceMap:Map<string, string> = new Map([
 export interface ClusterProps {
   /**
    * VPC
+   * 
+   * @default - create new VPC
    */
   readonly vpc?: ec2.IVpc;
 
   /**
    * Run worker nodes as EC2 Spot
+   * 
+   * @default true 
    */
   readonly spotWorkerNodes?: boolean;
 
   /**
    * control plane node ec2 instance type
+   * 
+   * @default mg6.medium
    */
   readonly controlPlaneInstanceType?: ec2.InstanceType;
     
   /**
    * worker node instance type
+   * 
+   * @default mg6.medium
    */
   readonly workerInstanceType?: ec2.InstanceType;
 
