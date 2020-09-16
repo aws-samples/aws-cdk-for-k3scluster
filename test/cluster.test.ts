@@ -17,9 +17,18 @@ test('create the default cluster', () => {
   expect(stack).toHaveResource('AWS::AutoScaling::AutoScalingGroup', {
     MaxSize: '3',
     MinSize: '3',
-    LaunchConfigurationName: {
-      Ref: 'ClusterWorkerAsgLaunchConfig70B7BCB1',
-    }})
+    LaunchTemplate: {
+      LaunchTemplateId: {
+        Ref: 'ClusterWorkerLaunchTemplate84D2244A',
+      },
+      Version: {
+        'Fn::GetAtt': [
+          'ClusterWorkerLaunchTemplate84D2244A',
+          'LatestVersionNumber',
+        ],
+      },
+    },
+  });
 
   expect(stack).toHaveResource('AWS::AutoScaling::LaunchConfiguration')
 });
@@ -51,12 +60,19 @@ test('support m6g instance types', () => {
   })
   // THEN
   // worker nodes ASG
-  expect(stack).toHaveResource('AWS::AutoScaling::LaunchConfiguration', {
-    ImageId: {
-      Ref: 'SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter',
+  expect(stack).toHaveResourceLike('AWS::EC2::LaunchTemplate', {
+    LaunchTemplateData: {
+      ImageId: {
+        Ref: 'SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter',
+      },
+      InstanceMarketOptions: {
+        MarketType: 'spot',
+        SpotOptions: {
+          SpotInstanceType: 'one-time',
+        },
+      },
+      InstanceType: 'm6g.medium',
     },
-    InstanceType: 'm6g.medium',
-    SpotPrice: '0.0385',
   });
   // control plane ec2
   expect(stack).toHaveResource('AWS::EC2::Instance', {
@@ -77,12 +93,19 @@ test('support t4g instance types', () => {
   })
   // THEN
   // worker nodes ASG
-  expect(stack).toHaveResource('AWS::AutoScaling::LaunchConfiguration', {
-    ImageId: {
-      Ref: 'SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter',
+  expect(stack).toHaveResourceLike('AWS::EC2::LaunchTemplate', {
+    LaunchTemplateData: {
+      ImageId: {
+        Ref: 'SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter',
+      },
+      InstanceMarketOptions: {
+        MarketType: 'spot',
+        SpotOptions: {
+          SpotInstanceType: 'one-time',
+        },
+      },
+      InstanceType: 't4g.medium',
     },
-    InstanceType: 't4g.medium',
-    SpotPrice: '0.0336',
   });
   // control plane ec2
   expect(stack).toHaveResource('AWS::EC2::Instance', {

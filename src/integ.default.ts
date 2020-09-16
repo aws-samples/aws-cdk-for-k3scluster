@@ -19,7 +19,7 @@ export class IntegTesting {
     const cluster = new k3s.Cluster(stack, 'Cluster', {
       vpc,
       spotWorkerNodes: true,
-      workerMinCapacity: 3,
+      workerMinCapacity: 1,
       workerInstanceType: new ec2.InstanceType('m6g.medium'),
       controlPlaneInstanceType: new ec2.InstanceType('m6g.medium'),
     })

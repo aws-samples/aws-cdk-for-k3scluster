@@ -58,11 +58,19 @@ Object {
         "Clusterk3scontrolplaneB59785BE",
       ],
       "Properties": Object {
-        "LaunchConfigurationName": Object {
-          "Ref": "ClusterWorkerAsgLaunchConfig70B7BCB1",
+        "LaunchTemplate": Object {
+          "LaunchTemplateId": Object {
+            "Ref": "ClusterWorkerLaunchTemplate84D2244A",
+          },
+          "Version": Object {
+            "Fn::GetAtt": Array [
+              "ClusterWorkerLaunchTemplate84D2244A",
+              "LatestVersionNumber",
+            ],
+          },
         },
-        "MaxSize": "3",
-        "MinSize": "3",
+        "MaxSize": "1",
+        "MinSize": "1",
         "Tags": Array [
           Object {
             "Key": "Name",
@@ -266,43 +274,62 @@ Object {
             ],
           },
         ],
-        "SpotPrice": "0.0385",
         "UserData": Object {
-          "Fn::Base64": Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "#!/bin/bash
-
-       #!/bin/bash
-       LOGFILE='/var/log/k3s.log'
-       curl -L -o k3s https://github.com/rancher/k3s/releases/download/v1.16.13%2Bk3s1/k3s-arm64
-       chmod +x k3s
-       echo the bucket name is ",
-                Object {
-                  "Ref": "Clusterk3sBucket0ECC11AD",
-                },
-                " 
-       aws s3 cp s3://",
-                Object {
-                  "Ref": "Clusterk3sBucket0ECC11AD",
-                },
-                "/node-token /node-token 
-       (./k3s agent --server https://",
-                Object {
-                  "Fn::GetAtt": Array [
-                    "Clusterk3scontrolplaneB59785BE",
-                    "PrivateIp",
-                  ],
-                },
-                ":6443        --token $(cat /node-token) 2>&1 | tee -a $LOGFILE || echo \\"failed\\" > $LOGFILE &)
-    ",
-              ],
-            ],
-          },
+          "Fn::Base64": "#!/bin/bash",
         },
       },
       "Type": "AWS::AutoScaling::LaunchConfiguration",
+    },
+    "ClusterWorkerLaunchTemplate84D2244A": Object {
+      "Properties": Object {
+        "LaunchTemplateData": Object {
+          "ImageId": Object {
+            "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter",
+          },
+          "InstanceMarketOptions": Object {
+            "MarketType": "spot",
+            "SpotOptions": Object {
+              "SpotInstanceType": "one-time",
+            },
+          },
+          "InstanceType": "m6g.medium",
+          "UserData": Object {
+            "Fn::Base64": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "#!/bin/bash
+
+          #!/bin/bash
+          LOGFILE='/var/log/k3s.log'
+          curl -L -o k3s https://github.com/rancher/k3s/releases/download/v1.16.13%2Bk3s1/k3s-arm64
+          chmod +x k3s
+          echo the bucket name is ",
+                  Object {
+                    "Ref": "Clusterk3sBucket0ECC11AD",
+                  },
+                  " 
+          aws s3 cp s3://",
+                  Object {
+                    "Ref": "Clusterk3sBucket0ECC11AD",
+                  },
+                  "/node-token /node-token 
+          (./k3s agent --server https://",
+                  Object {
+                    "Fn::GetAtt": Array [
+                      "Clusterk3scontrolplaneB59785BE",
+                      "PrivateIp",
+                    ],
+                  },
+                  ":6443           --token $(cat /node-token) 2>&1 | tee -a $LOGFILE || echo \\"failed\\" > $LOGFILE &)
+    ",
+                ],
+              ],
+            },
+          },
+        },
+      },
+      "Type": "AWS::EC2::LaunchTemplate",
     },
     "Clusterk3sBucket0ECC11AD": Object {
       "DeletionPolicy": "Retain",
@@ -472,7 +499,6 @@ Object {
     "Clusterk3scontrolplaneSGCFC3EC51": Object {
       "Properties": Object {
         "GroupDescription": "testing-stack/Cluster/k3s-controlplane-SG",
-        "GroupName": "k3s-controlplane-SG",
         "SecurityGroupEgress": Array [
           Object {
             "CidrIp": "0.0.0.0/0",
@@ -505,7 +531,6 @@ Object {
     "Clusterk3sworkerSGA0EEA026": Object {
       "Properties": Object {
         "GroupDescription": "testing-stack/Cluster/k3s-worker-SG",
-        "GroupName": "k3-worker-SG",
         "SecurityGroupEgress": Array [
           Object {
             "CidrIp": "0.0.0.0/0",

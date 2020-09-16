@@ -10,18 +10,6 @@ import * as path from 'path';
 
 const DEFAULT_INSTANCE_TYPE = ec2.InstanceType.of(ec2.InstanceClass.M6G, ec2.InstanceSize.MEDIUM)
 
-let PriceMap:Map<string, string> = new Map([
-  ['m6g.medium', '0.0385'],
-  ['m6g.large', '0.077'],
-  ['t4g.nano', '0.0042'],
-  ['t4g.micro', '0.0084'],
-  ['t4g.small', '0.0168'],
-  ['t4g.medium', '0.0336'],
-  ['t4g.large', '0.0672'],
-  ['t4g.xlarge', '0.1344'],
-  ['t4g.2xlarge', '0.2688'],
-]);
-
 export interface ClusterProps {
   /**
    * VPC
@@ -125,20 +113,12 @@ export class Cluster extends cdk.Construct {
     }
 
     // control plane node Security Group      
-    const k3scontrolplanesg = new ec2.SecurityGroup(this, 'k3s-controlplane-SG', {
-      vpc,
-      securityGroupName: 'k3s-controlplane-SG',
-      allowAllOutbound: true,
-    });
+    const k3scontrolplanesg = new ec2.SecurityGroup(this, 'k3s-controlplane-SG', { vpc });
     k3scontrolplanesg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(22), 'SSH');
     k3scontrolplanesg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(6443), 'K3s port');
 
     // worker nodes Security Group      
-    const k3sworkersg = new ec2.SecurityGroup(this, 'k3s-worker-SG', {
-      vpc,
-      securityGroupName: 'k3-worker-SG',
-      allowAllOutbound: true,
-    });
+    const k3sworkersg = new ec2.SecurityGroup(this, 'k3s-worker-SG', { vpc });
     // for this prototype the workers are being placed in a public subnet 
     // ideally they should land on a private subnet 
     /// also ingress traffic - ssh (bastion style) or 6443 - should come from the control plane node only 
@@ -176,7 +156,34 @@ export class Cluster extends cdk.Construct {
      `);
 
     
-    this.endpointUri = k3scontrolplane.instancePublicIp 
+    this.endpointUri = k3scontrolplane.instancePublicIp
+
+    // create launch template for worker ASG
+    // prepare the userData
+    const userData = ec2.UserData.forLinux();
+    userData.addCommands(`
+          #!/bin/bash
+          LOGFILE='/var/log/k3s.log'
+          curl -L -o k3s https://github.com/rancher/k3s/releases/download/v1.16.13%2Bk3s1/k3s-arm64
+          chmod +x k3s
+          echo the bucket name is ${k3sBucket.bucketName} 
+          aws s3 cp s3://${k3sBucket.bucketName}/node-token /node-token 
+          (./k3s agent --server https://${k3scontrolplane.instancePrivateIp}:6443 \
+          --token $(cat /node-token) 2>&1 | tee -a $LOGFILE || echo "failed" > $LOGFILE &)
+    `);
+    const lt = new ec2.CfnLaunchTemplate(this, 'WorkerLaunchTemplate', {
+      launchTemplateData: {
+        imageId: new AmiProvider().amiId.getImage(this).imageId,
+        instanceType: this.workerInstanceType.toString(),
+        instanceMarketOptions: {
+          marketType: props.spotWorkerNodes ? 'spot' : undefined,
+          spotOptions: props.spotWorkerNodes ? {
+            spotInstanceType: 'one-time',
+          } : undefined,
+        },
+        userData: cdk.Fn.base64(userData.render()),
+      },
+    });
     
     // create worker ASG
     const workerAsg = new autoscaling.AutoScalingGroup(this, 'WorkerAsg', { 
@@ -187,19 +194,14 @@ export class Cluster extends cdk.Construct {
         subnetType: ec2.SubnetType.PUBLIC, 
       },
       minCapacity: props.workerMinCapacity ?? 3,
-      spotPrice: props.spotWorkerNodes ? PriceMap.get(this.workerInstanceType.toString()) : undefined,
     })
 
-    workerAsg.addUserData(`
-       #!/bin/bash
-       LOGFILE='/var/log/k3s.log'
-       curl -L -o k3s https://github.com/rancher/k3s/releases/download/v1.16.13%2Bk3s1/k3s-arm64
-       chmod +x k3s
-       echo the bucket name is ${k3sBucket.bucketName} 
-       aws s3 cp s3://${k3sBucket.bucketName}/node-token /node-token 
-       (./k3s agent --server https://${k3scontrolplane.instancePrivateIp}:6443 \
-       --token $(cat /node-token) 2>&1 | tee -a $LOGFILE || echo "failed" > $LOGFILE &)
-    `);
+    const cfnAsg = workerAsg.node.tryFindChild('ASG') as autoscaling.CfnAutoScalingGroup;
+    cfnAsg.addPropertyDeletionOverride('LaunchConfigurationName');
+    cfnAsg.addPropertyOverride('LaunchTemplate', {
+      LaunchTemplateId: lt.ref,
+      Version: lt.attrLatestVersionNumber,
+    })
 
     workerAsg.addSecurityGroup(k3sworkersg)
     
