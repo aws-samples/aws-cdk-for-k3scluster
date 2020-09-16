@@ -176,7 +176,7 @@ Cleaning up the environment is as easy as running `cdk destroy` from where you l
 
 * I have only tested this in `us-west-2`. It should work in other regions too but I haven't tried 
 
-* The two options you have for instances are `m6g.medium` and `m6g.large`. If you want to add another instance choice you probably need to add/tweak the PriceMap in `cdk-stack.ts`. I have not tested it 
+* The instance type and size options for `spot` deployments are limited to `m6g.medium`, `m6g.large` and all the `t4g` sizes. You could easily add another instance type/size option by tweaking the PriceMap in `cdk-stack.ts` 
 
 * `cdk-k3s-cluster` only deploys Arm-based instances. It would be trivial to add x86 based instances support but it's not there today 
 

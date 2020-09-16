@@ -1,0 +1,891 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`integ snapshot validation 1`] = `
+Object {
+  "Outputs": Object {
+    "ClusterEndpoint6A9A88C6": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Fn::GetAtt": Array [
+                "Clusterk3scontrolplaneB59785BE",
+                "PublicIp",
+              ],
+            },
+            ":6443",
+          ],
+        ],
+      },
+    },
+    "ClusterKubernetesconfigurationfileF12D6B54": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "s3://",
+            Object {
+              "Ref": "Clusterk3sBucket0ECC11AD",
+            },
+            "/kubeconfig.yaml",
+          ],
+        ],
+      },
+    },
+    "EndpointURI": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "Clusterk3scontrolplaneB59785BE",
+          "PublicIp",
+        ],
+      },
+    },
+  },
+  "Parameters": Object {
+    "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter": Object {
+      "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-arm64-gp2",
+      "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+    },
+  },
+  "Resources": Object {
+    "ClusterWorkerAsgASGFC685DD3": Object {
+      "DependsOn": Array [
+        "Clusterk3scontrolplaneInstanceProfile86CC8202",
+        "Clusterk3scontrolplaneInstanceRoleDefaultPolicyCB631D58",
+        "Clusterk3scontrolplaneInstanceRole5E5C95C5",
+        "Clusterk3scontrolplaneB59785BE",
+      ],
+      "Properties": Object {
+        "LaunchConfigurationName": Object {
+          "Ref": "ClusterWorkerAsgLaunchConfig70B7BCB1",
+        },
+        "MaxSize": "3",
+        "MinSize": "3",
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "PropagateAtLaunch": true,
+            "Value": "testing-stack/Cluster/WorkerAsg",
+          },
+        ],
+        "VPCZoneIdentifier": Array [
+          Object {
+            "Ref": "VpcPublicSubnet1Subnet5C2D37C4",
+          },
+          Object {
+            "Ref": "VpcPublicSubnet2Subnet691E08A3",
+          },
+        ],
+      },
+      "Type": "AWS::AutoScaling::AutoScalingGroup",
+      "UpdatePolicy": Object {
+        "AutoScalingScheduledAction": Object {
+          "IgnoreUnmodifiedGroupSizeProperties": true,
+        },
+      },
+    },
+    "ClusterWorkerAsgInstanceProfile3B8CC231": Object {
+      "DependsOn": Array [
+        "Clusterk3scontrolplaneInstanceProfile86CC8202",
+        "Clusterk3scontrolplaneInstanceRoleDefaultPolicyCB631D58",
+        "Clusterk3scontrolplaneInstanceRole5E5C95C5",
+        "Clusterk3scontrolplaneB59785BE",
+      ],
+      "Properties": Object {
+        "Roles": Array [
+          Object {
+            "Ref": "ClusterWorkerAsgInstanceRole91EE5653",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::InstanceProfile",
+    },
+    "ClusterWorkerAsgInstanceRole91EE5653": Object {
+      "DependsOn": Array [
+        "Clusterk3scontrolplaneInstanceProfile86CC8202",
+        "Clusterk3scontrolplaneInstanceRoleDefaultPolicyCB631D58",
+        "Clusterk3scontrolplaneInstanceRole5E5C95C5",
+        "Clusterk3scontrolplaneB59785BE",
+      ],
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "ec2.",
+                      Object {
+                        "Ref": "AWS::URLSuffix",
+                      },
+                    ],
+                  ],
+                },
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/AmazonSSMManagedInstanceCore",
+              ],
+            ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "testing-stack/Cluster/WorkerAsg",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ClusterWorkerAsgInstanceRoleDefaultPolicy4C92ADD4": Object {
+      "DependsOn": Array [
+        "Clusterk3scontrolplaneInstanceProfile86CC8202",
+        "Clusterk3scontrolplaneInstanceRoleDefaultPolicyCB631D58",
+        "Clusterk3scontrolplaneInstanceRole5E5C95C5",
+        "Clusterk3scontrolplaneB59785BE",
+      ],
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "Clusterk3sBucket0ECC11AD",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "Clusterk3sBucket0ECC11AD",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ClusterWorkerAsgInstanceRoleDefaultPolicy4C92ADD4",
+        "Roles": Array [
+          Object {
+            "Ref": "ClusterWorkerAsgInstanceRole91EE5653",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "ClusterWorkerAsgInstanceSecurityGroupB2CC9585": Object {
+      "DependsOn": Array [
+        "Clusterk3scontrolplaneInstanceProfile86CC8202",
+        "Clusterk3scontrolplaneInstanceRoleDefaultPolicyCB631D58",
+        "Clusterk3scontrolplaneInstanceRole5E5C95C5",
+        "Clusterk3scontrolplaneB59785BE",
+      ],
+      "Properties": Object {
+        "GroupDescription": "testing-stack/Cluster/WorkerAsg/InstanceSecurityGroup",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "testing-stack/Cluster/WorkerAsg",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "ClusterWorkerAsgLaunchConfig70B7BCB1": Object {
+      "DependsOn": Array [
+        "Clusterk3scontrolplaneInstanceProfile86CC8202",
+        "Clusterk3scontrolplaneInstanceRoleDefaultPolicyCB631D58",
+        "Clusterk3scontrolplaneInstanceRole5E5C95C5",
+        "Clusterk3scontrolplaneB59785BE",
+        "ClusterWorkerAsgInstanceRoleDefaultPolicy4C92ADD4",
+        "ClusterWorkerAsgInstanceRole91EE5653",
+      ],
+      "Properties": Object {
+        "IamInstanceProfile": Object {
+          "Ref": "ClusterWorkerAsgInstanceProfile3B8CC231",
+        },
+        "ImageId": Object {
+          "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter",
+        },
+        "InstanceType": "m6g.medium",
+        "SecurityGroups": Array [
+          Object {
+            "Fn::GetAtt": Array [
+              "ClusterWorkerAsgInstanceSecurityGroupB2CC9585",
+              "GroupId",
+            ],
+          },
+          Object {
+            "Fn::GetAtt": Array [
+              "Clusterk3sworkerSGA0EEA026",
+              "GroupId",
+            ],
+          },
+        ],
+        "SpotPrice": "0.0385",
+        "UserData": Object {
+          "Fn::Base64": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "#!/bin/bash
+
+       #!/bin/bash
+       LOGFILE='/var/log/k3s.log'
+       curl -L -o k3s https://github.com/rancher/k3s/releases/download/v1.16.13%2Bk3s1/k3s-arm64
+       chmod +x k3s
+       echo the bucket name is ",
+                Object {
+                  "Ref": "Clusterk3sBucket0ECC11AD",
+                },
+                " 
+       aws s3 cp s3://",
+                Object {
+                  "Ref": "Clusterk3sBucket0ECC11AD",
+                },
+                "/node-token /node-token 
+       (./k3s agent --server https://",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "Clusterk3scontrolplaneB59785BE",
+                    "PrivateIp",
+                  ],
+                },
+                ":6443        --token $(cat /node-token) 2>&1 | tee -a $LOGFILE || echo \\"failed\\" > $LOGFILE &)
+    ",
+              ],
+            ],
+          },
+        },
+      },
+      "Type": "AWS::AutoScaling::LaunchConfiguration",
+    },
+    "Clusterk3sBucket0ECC11AD": Object {
+      "DeletionPolicy": "Retain",
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "Clusterk3scontrolplaneB59785BE": Object {
+      "DependsOn": Array [
+        "Clusterk3scontrolplaneInstanceRoleDefaultPolicyCB631D58",
+        "Clusterk3scontrolplaneInstanceRole5E5C95C5",
+      ],
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            0,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "IamInstanceProfile": Object {
+          "Ref": "Clusterk3scontrolplaneInstanceProfile86CC8202",
+        },
+        "ImageId": Object {
+          "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter",
+        },
+        "InstanceType": "m6g.medium",
+        "SecurityGroupIds": Array [
+          Object {
+            "Fn::GetAtt": Array [
+              "Clusterk3scontrolplaneSGCFC3EC51",
+              "GroupId",
+            ],
+          },
+        ],
+        "SubnetId": Object {
+          "Ref": "VpcPublicSubnet1Subnet5C2D37C4",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "k3s-controlplane",
+          },
+        ],
+        "UserData": Object {
+          "Fn::Base64": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "#!/bin/bash
+
+       #!/bin/bash
+       curl -L -o k3s https://github.com/rancher/k3s/releases/download/v1.16.9%2Bk3s1/k3s-arm64
+       chmod +x k3s
+       ./k3s server &
+       sleep 30
+       ENDPOINT=$(curl http://169.254.169.254/latest/meta-data/public-hostname) 
+       cp /etc/rancher/k3s/k3s.yaml /etc/rancher/k3s/kubeconfig.yaml
+       sed -i s/127.0.0.1/$ENDPOINT/ /etc/rancher/k3s/kubeconfig.yaml
+       aws s3 cp /var/lib/rancher/k3s/server/node-token s3://",
+                Object {
+                  "Ref": "Clusterk3sBucket0ECC11AD",
+                },
+                "/node-token
+       aws s3 cp /etc/rancher/k3s/kubeconfig.yaml s3://",
+                Object {
+                  "Ref": "Clusterk3sBucket0ECC11AD",
+                },
+                "/kubeconfig.yaml
+     ",
+              ],
+            ],
+          },
+        },
+      },
+      "Type": "AWS::EC2::Instance",
+    },
+    "Clusterk3scontrolplaneInstanceProfile86CC8202": Object {
+      "Properties": Object {
+        "Roles": Array [
+          Object {
+            "Ref": "Clusterk3scontrolplaneInstanceRole5E5C95C5",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::InstanceProfile",
+    },
+    "Clusterk3scontrolplaneInstanceRole5E5C95C5": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "ec2.",
+                      Object {
+                        "Ref": "AWS::URLSuffix",
+                      },
+                    ],
+                  ],
+                },
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "k3s-controlplane",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "Clusterk3scontrolplaneInstanceRoleDefaultPolicyCB631D58": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:DeleteObject*",
+                "s3:PutObject*",
+                "s3:Abort*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "Clusterk3sBucket0ECC11AD",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "Clusterk3sBucket0ECC11AD",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "Clusterk3scontrolplaneInstanceRoleDefaultPolicyCB631D58",
+        "Roles": Array [
+          Object {
+            "Ref": "Clusterk3scontrolplaneInstanceRole5E5C95C5",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "Clusterk3scontrolplaneSGCFC3EC51": Object {
+      "Properties": Object {
+        "GroupDescription": "testing-stack/Cluster/k3s-controlplane-SG",
+        "GroupName": "k3s-controlplane-SG",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "SSH",
+            "FromPort": 22,
+            "IpProtocol": "tcp",
+            "ToPort": 22,
+          },
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "K3s port",
+            "FromPort": 6443,
+            "IpProtocol": "tcp",
+            "ToPort": 6443,
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "Clusterk3sworkerSGA0EEA026": Object {
+      "Properties": Object {
+        "GroupDescription": "testing-stack/Cluster/k3s-worker-SG",
+        "GroupName": "k3-worker-SG",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "SSH",
+            "FromPort": 22,
+            "IpProtocol": "tcp",
+            "ToPort": 22,
+          },
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "K3s port",
+            "FromPort": 6443,
+            "IpProtocol": "tcp",
+            "ToPort": 6443,
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "Vpc8378EB38": Object {
+      "Properties": Object {
+        "CidrBlock": "10.0.0.0/16",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "testing-stack/Vpc",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::VPC",
+    },
+    "VpcIGWD7BA715C": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "testing-stack/Vpc",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::InternetGateway",
+    },
+    "VpcPrivateSubnet1DefaultRouteBE02A9ED": Object {
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": Object {
+          "Ref": "VpcPublicSubnet1NATGateway4D7517AA",
+        },
+        "RouteTableId": Object {
+          "Ref": "VpcPrivateSubnet1RouteTableB2C5B500",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "VpcPrivateSubnet1RouteTableAssociation70C59FA6": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "VpcPrivateSubnet1RouteTableB2C5B500",
+        },
+        "SubnetId": Object {
+          "Ref": "VpcPrivateSubnet1Subnet536B997A",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "VpcPrivateSubnet1RouteTableB2C5B500": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "testing-stack/Vpc/PrivateSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "VpcPrivateSubnet1Subnet536B997A": Object {
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            0,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.128.0/18",
+        "MapPublicIpOnLaunch": false,
+        "Tags": Array [
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Private",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "testing-stack/Vpc/PrivateSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "VpcPrivateSubnet2DefaultRoute060D2087": Object {
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": Object {
+          "Ref": "VpcPublicSubnet1NATGateway4D7517AA",
+        },
+        "RouteTableId": Object {
+          "Ref": "VpcPrivateSubnet2RouteTableA678073B",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "VpcPrivateSubnet2RouteTableA678073B": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "testing-stack/Vpc/PrivateSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "VpcPrivateSubnet2RouteTableAssociationA89CAD56": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "VpcPrivateSubnet2RouteTableA678073B",
+        },
+        "SubnetId": Object {
+          "Ref": "VpcPrivateSubnet2Subnet3788AAA1",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "VpcPrivateSubnet2Subnet3788AAA1": Object {
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            1,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.192.0/18",
+        "MapPublicIpOnLaunch": false,
+        "Tags": Array [
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Private",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "testing-stack/Vpc/PrivateSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "VpcPublicSubnet1DefaultRoute3DA9E72A": Object {
+      "DependsOn": Array [
+        "VpcVPCGWBF912B6E",
+      ],
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": Object {
+          "Ref": "VpcIGWD7BA715C",
+        },
+        "RouteTableId": Object {
+          "Ref": "VpcPublicSubnet1RouteTable6C95E38E",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "VpcPublicSubnet1EIPD7E02669": Object {
+      "Properties": Object {
+        "Domain": "vpc",
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "testing-stack/Vpc/PublicSubnet1",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::EIP",
+    },
+    "VpcPublicSubnet1NATGateway4D7517AA": Object {
+      "Properties": Object {
+        "AllocationId": Object {
+          "Fn::GetAtt": Array [
+            "VpcPublicSubnet1EIPD7E02669",
+            "AllocationId",
+          ],
+        },
+        "SubnetId": Object {
+          "Ref": "VpcPublicSubnet1Subnet5C2D37C4",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "testing-stack/Vpc/PublicSubnet1",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::NatGateway",
+    },
+    "VpcPublicSubnet1RouteTable6C95E38E": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "testing-stack/Vpc/PublicSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "VpcPublicSubnet1RouteTableAssociation97140677": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "VpcPublicSubnet1RouteTable6C95E38E",
+        },
+        "SubnetId": Object {
+          "Ref": "VpcPublicSubnet1Subnet5C2D37C4",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "VpcPublicSubnet1Subnet5C2D37C4": Object {
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            0,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.0.0/18",
+        "MapPublicIpOnLaunch": true,
+        "Tags": Array [
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "testing-stack/Vpc/PublicSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "VpcPublicSubnet2DefaultRoute97F91067": Object {
+      "DependsOn": Array [
+        "VpcVPCGWBF912B6E",
+      ],
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": Object {
+          "Ref": "VpcIGWD7BA715C",
+        },
+        "RouteTableId": Object {
+          "Ref": "VpcPublicSubnet2RouteTable94F7E489",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "VpcPublicSubnet2RouteTable94F7E489": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "testing-stack/Vpc/PublicSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "VpcPublicSubnet2RouteTableAssociationDD5762D8": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "VpcPublicSubnet2RouteTable94F7E489",
+        },
+        "SubnetId": Object {
+          "Ref": "VpcPublicSubnet2Subnet691E08A3",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "VpcPublicSubnet2Subnet691E08A3": Object {
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            1,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.64.0/18",
+        "MapPublicIpOnLaunch": true,
+        "Tags": Array [
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "testing-stack/Vpc/PublicSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "VpcVPCGWBF912B6E": Object {
+      "Properties": Object {
+        "InternetGatewayId": Object {
+          "Ref": "VpcIGWD7BA715C",
+        },
+        "VpcId": Object {
+          "Ref": "Vpc8378EB38",
+        },
+      },
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+    },
+  },
+}
+`;

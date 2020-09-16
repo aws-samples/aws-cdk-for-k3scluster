@@ -13,6 +13,13 @@ const DEFAULT_INSTANCE_TYPE = ec2.InstanceType.of(ec2.InstanceClass.M6G, ec2.Ins
 let PriceMap:Map<string, string> = new Map([
   ['m6g.medium', '0.0385'],
   ['m6g.large', '0.077'],
+  ['t4g.nano', '0.0042'],
+  ['t4g.micro', '0.0084'],
+  ['t4g.small', '0.0168'],
+  ['t4g.medium', '0.0336'],
+  ['t4g.large', '0.0672'],
+  ['t4g.xlarge', '0.1344'],
+  ['t4g.2xlarge', '0.2688'],
 ]);
 
 export interface ClusterProps {
