@@ -44,12 +44,67 @@ Object {
     },
   },
   "Parameters": Object {
+    "AssetParameters20e06317b2e4aa8c9a1052d2e0f40d4c738bc91399a9ea24aa2b1e013bfe584bArtifactHash6D2CA43C": Object {
+      "Description": "Artifact hash for asset \\"20e06317b2e4aa8c9a1052d2e0f40d4c738bc91399a9ea24aa2b1e013bfe584b\\"",
+      "Type": "String",
+    },
+    "AssetParameters20e06317b2e4aa8c9a1052d2e0f40d4c738bc91399a9ea24aa2b1e013bfe584bS3BucketD5770D8A": Object {
+      "Description": "S3 bucket for asset \\"20e06317b2e4aa8c9a1052d2e0f40d4c738bc91399a9ea24aa2b1e013bfe584b\\"",
+      "Type": "String",
+    },
+    "AssetParameters20e06317b2e4aa8c9a1052d2e0f40d4c738bc91399a9ea24aa2b1e013bfe584bS3VersionKey7334E3C3": Object {
+      "Description": "S3 key for asset version \\"20e06317b2e4aa8c9a1052d2e0f40d4c738bc91399a9ea24aa2b1e013bfe584b\\"",
+      "Type": "String",
+    },
+    "AssetParameters2c1b581102fff68e6f015e50b7a302bb30efc81eac18cd3461e293473ce10a0aArtifactHashB2575C75": Object {
+      "Description": "Artifact hash for asset \\"2c1b581102fff68e6f015e50b7a302bb30efc81eac18cd3461e293473ce10a0a\\"",
+      "Type": "String",
+    },
+    "AssetParameters2c1b581102fff68e6f015e50b7a302bb30efc81eac18cd3461e293473ce10a0aS3Bucket13334F1C": Object {
+      "Description": "S3 bucket for asset \\"2c1b581102fff68e6f015e50b7a302bb30efc81eac18cd3461e293473ce10a0a\\"",
+      "Type": "String",
+    },
+    "AssetParameters2c1b581102fff68e6f015e50b7a302bb30efc81eac18cd3461e293473ce10a0aS3VersionKey2BBAFB9D": Object {
+      "Description": "S3 key for asset version \\"2c1b581102fff68e6f015e50b7a302bb30efc81eac18cd3461e293473ce10a0a\\"",
+      "Type": "String",
+    },
+    "AssetParameters7b8f901e53744758131669f2606b340cd2b32759fbbfc3dd93fb3fa4d08d690aArtifactHash84962CBE": Object {
+      "Description": "Artifact hash for asset \\"7b8f901e53744758131669f2606b340cd2b32759fbbfc3dd93fb3fa4d08d690a\\"",
+      "Type": "String",
+    },
+    "AssetParameters7b8f901e53744758131669f2606b340cd2b32759fbbfc3dd93fb3fa4d08d690aS3Bucket24A39C33": Object {
+      "Description": "S3 bucket for asset \\"7b8f901e53744758131669f2606b340cd2b32759fbbfc3dd93fb3fa4d08d690a\\"",
+      "Type": "String",
+    },
+    "AssetParameters7b8f901e53744758131669f2606b340cd2b32759fbbfc3dd93fb3fa4d08d690aS3VersionKey0E38F1A8": Object {
+      "Description": "S3 key for asset version \\"7b8f901e53744758131669f2606b340cd2b32759fbbfc3dd93fb3fa4d08d690a\\"",
+      "Type": "String",
+    },
     "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter": Object {
       "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-arm64-gp2",
       "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
     },
   },
   "Resources": Object {
+    "ClusterCRdeleteS3ObjectProviderC81CA0D5": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "Clusterk3sBucket0ECC11AD",
+      ],
+      "Properties": Object {
+        "Bucket": Object {
+          "Ref": "Clusterk3sBucket0ECC11AD",
+        },
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "ClusterdeleteS3ObjectProviderframeworkonEvent1699789C",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
     "ClusterWorkerAsgASGFC685DD3": Object {
       "DependsOn": Array [
         "Clusterk3scontrolplaneInstanceProfile86CC8202",
@@ -331,10 +386,157 @@ Object {
       },
       "Type": "AWS::EC2::LaunchTemplate",
     },
+    "ClusterdeleteS3ObjectProviderframeworkonEvent1699789C": Object {
+      "DependsOn": Array [
+        "ClusterdeleteS3ObjectProviderframeworkonEventServiceRoleDefaultPolicy203B225F",
+        "ClusterdeleteS3ObjectProviderframeworkonEventServiceRole139620D6",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameters7b8f901e53744758131669f2606b340cd2b32759fbbfc3dd93fb3fa4d08d690aS3Bucket24A39C33",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters7b8f901e53744758131669f2606b340cd2b32759fbbfc3dd93fb3fa4d08d690aS3VersionKey0E38F1A8",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters7b8f901e53744758131669f2606b340cd2b32759fbbfc3dd93fb3fa4d08d690aS3VersionKey0E38F1A8",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Description": "AWS CDK resource provider framework - onEvent (testing-stack/Cluster/deleteS3ObjectProvider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "ClusteronEventHandler0F98534A",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onEvent",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ClusterdeleteS3ObjectProviderframeworkonEventServiceRole139620D6",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs10.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ClusterdeleteS3ObjectProviderframeworkonEventLogRetentionD68A9D72": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "ClusterdeleteS3ObjectProviderframeworkonEvent1699789C",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "ClusterdeleteS3ObjectProviderframeworkonEventServiceRole139620D6": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ClusterdeleteS3ObjectProviderframeworkonEventServiceRoleDefaultPolicy203B225F": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "ClusteronEventHandler0F98534A",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ClusterdeleteS3ObjectProviderframeworkonEventServiceRoleDefaultPolicy203B225F",
+        "Roles": Array [
+          Object {
+            "Ref": "ClusterdeleteS3ObjectProviderframeworkonEventServiceRole139620D6",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
     "Clusterk3sBucket0ECC11AD": Object {
-      "DeletionPolicy": "Retain",
+      "DeletionPolicy": "Delete",
       "Type": "AWS::S3::Bucket",
-      "UpdateReplacePolicy": "Retain",
+      "UpdateReplacePolicy": "Delete",
     },
     "Clusterk3scontrolplaneB59785BE": Object {
       "DependsOn": Array [
@@ -559,6 +761,269 @@ Object {
         },
       },
       "Type": "AWS::EC2::SecurityGroup",
+    },
+    "ClusteronEventHandler0F98534A": Object {
+      "DependsOn": Array [
+        "ClusteronEventHandlerServiceRoleDefaultPolicy776DDCC8",
+        "ClusteronEventHandlerServiceRole88510C92",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameters2c1b581102fff68e6f015e50b7a302bb30efc81eac18cd3461e293473ce10a0aS3Bucket13334F1C",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters2c1b581102fff68e6f015e50b7a302bb30efc81eac18cd3461e293473ce10a0aS3VersionKey2BBAFB9D",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters2c1b581102fff68e6f015e50b7a302bb30efc81eac18cd3461e293473ce10a0aS3VersionKey2BBAFB9D",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Handler": "index.on_event",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ClusteronEventHandlerServiceRole88510C92",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.8",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ClusteronEventHandlerServiceRole88510C92": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ClusteronEventHandlerServiceRoleDefaultPolicy776DDCC8": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "s3:DeleteObject*",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    Object {
+                      "Fn::GetAtt": Array [
+                        "Clusterk3sBucket0ECC11AD",
+                        "Arn",
+                      ],
+                    },
+                    "/*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+                "s3:PutObject*",
+                "s3:Abort*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "Clusterk3sBucket0ECC11AD",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "Clusterk3sBucket0ECC11AD",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ClusteronEventHandlerServiceRoleDefaultPolicy776DDCC8",
+        "Roles": Array [
+          Object {
+            "Ref": "ClusteronEventHandlerServiceRole88510C92",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A": Object {
+      "DependsOn": Array [
+        "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB",
+        "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameters20e06317b2e4aa8c9a1052d2e0f40d4c738bc91399a9ea24aa2b1e013bfe584bS3BucketD5770D8A",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters20e06317b2e4aa8c9a1052d2e0f40d4c738bc91399a9ea24aa2b1e013bfe584bS3VersionKey7334E3C3",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters20e06317b2e4aa8c9a1052d2e0f40d4c738bc91399a9ea24aa2b1e013bfe584bS3VersionKey7334E3C3",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs10.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:PutRetentionPolicy",
+                "logs:DeleteRetentionPolicy",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB",
+        "Roles": Array [
+          Object {
+            "Ref": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
     },
     "Vpc8378EB38": Object {
       "Properties": Object {

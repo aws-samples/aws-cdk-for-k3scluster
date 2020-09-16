@@ -1,5 +1,5 @@
 import * as k3s from './'
-import { App, Stack, CfnOutput } from '@aws-cdk/core';
+import { App, Stack, CfnOutput, RemovalPolicy } from '@aws-cdk/core';
 import * as ec2 from '@aws-cdk/aws-ec2';
 
 export class IntegTesting {
@@ -22,6 +22,7 @@ export class IntegTesting {
       workerMinCapacity: 1,
       workerInstanceType: new ec2.InstanceType('m6g.medium'),
       controlPlaneInstanceType: new ec2.InstanceType('m6g.medium'),
+      bucketRemovalPolicy: RemovalPolicy.DESTROY,
     })
     
     new CfnOutput(stack, 'EndpointURI', { value: cluster.endpointUri }); 
