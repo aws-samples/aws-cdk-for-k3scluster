@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.0.14 (2020-09-16)
+
+
+### Features
+
+* **core:** add t4g instance types in the PriceMap ([#19](https://github.com/aws-samples/aws-cdk-for-k3scluster/issues/19)) ([547a393](https://github.com/aws-samples/aws-cdk-for-k3scluster/commit/547a3935e53aeb73a7820e371d84f39b02063e39))
+
 ### 0.0.13 (2020-09-15)
 
 ### 0.0.12 (2020-09-15)
