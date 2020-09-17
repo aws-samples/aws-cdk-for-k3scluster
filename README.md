@@ -4,7 +4,7 @@
 
 ## What is cdk-k3s-cluster?
 
-`cdk-k3s-cluster` is a new JSII construct library for AWS CDK that deploys a scalable Kubernetes [K3s](https://k3s.io/) cluster on **Graviton2 Arm-based** (mg6) **Spot** instances with one ~~click~~ command on AWS.
+`cdk-k3s-cluster` is a new JSII construct library for AWS CDK that deploys a scalable Kubernetes [K3s](https://k3s.io/) cluster on **Graviton2 Arm-based** (mg6 by default) **Spot** instances with one ~~click~~ command on AWS.
 
 
 ## What problem does cdk-k3s-cluster solve?
@@ -170,17 +170,13 @@ Cleaning up the environment is as easy as running `cdk destroy` from where you l
 
 ## Known issues and limitations
 
-* First and foremost this is a learning experiment. I have done limited tests with it. 
+* First and foremost this is a learning experiment. We have done limited tests with it. 
 
-* Frankly I have not tested this beyond a mere `kubectl get nodes` test. Let alone trying anything like [arkade](https://github.com/alexellis/arkade) 
-
-* I have only tested this in `us-west-2`. It should work in other regions too but I haven't tried 
-
-* The instance type and size options for `spot` deployments are limited to `m6g.medium`, `m6g.large` and all the `t4g` sizes. You could easily add another instance type/size option by tweaking the PriceMap in `cdk-stack.ts` 
+* We have not tested this beyond a mere `kubectl get nodes` test. Let alone trying anything like [arkade](https://github.com/alexellis/arkade) 
 
 * `cdk-k3s-cluster` only deploys Arm-based instances. It would be trivial to add x86 based instances support but it's not there today 
 
-* All the control plane and worker nodes are deployed in public subnets and the SGs are fairly permissive in terms of "source". Picking private subnets would have probably broken the use case of deploying into the `default` VPC (which is handy). This prototype over-indexes more on deployment convenience and ease of use than on best practices. 
+* All the control plane and worker nodes are deployed in public subnets and the SGs are fairly permissive in terms of "source". Picking private subnets would have probably broken the use case of deploying into the `default` VPC (which is handy). This prototype over-indexes more on deployment convenience and ease of use than on best practices. Be mindful of that
 
 * The control plane instance always deploys `on-demand` while for worker nodes you can pick between `on-demand` and `Spot`
 

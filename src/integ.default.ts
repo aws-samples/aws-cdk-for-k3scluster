@@ -1,5 +1,5 @@
 import * as k3s from './'
-import { App, Stack, CfnOutput } from '@aws-cdk/core';
+import { App, Stack, CfnOutput, RemovalPolicy } from '@aws-cdk/core';
 import * as ec2 from '@aws-cdk/aws-ec2';
 
 export class IntegTesting {
@@ -19,12 +19,14 @@ export class IntegTesting {
     const cluster = new k3s.Cluster(stack, 'Cluster', {
       vpc,
       spotWorkerNodes: true,
-      workerMinCapacity: 3,
+      workerMinCapacity: 1,
       workerInstanceType: new ec2.InstanceType('m6g.medium'),
       controlPlaneInstanceType: new ec2.InstanceType('m6g.medium'),
+      bucketRemovalPolicy: RemovalPolicy.DESTROY,
     })
     
     new CfnOutput(stack, 'EndpointURI', { value: cluster.endpointUri }); 
+    new CfnOutput(stack, 'Region', { value: Stack.of(stack).region }); 
     this.stack = [ stack ]
   };
 }
