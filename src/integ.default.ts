@@ -26,6 +26,7 @@ export class IntegTesting {
     })
     
     new CfnOutput(stack, 'EndpointURI', { value: cluster.endpointUri }); 
+    new CfnOutput(stack, 'Region', { value: Stack.of(stack).region }); 
     this.stack = [ stack ]
   };
 }

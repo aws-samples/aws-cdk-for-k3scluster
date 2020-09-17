@@ -42,6 +42,11 @@ Object {
         ],
       },
     },
+    "Region": Object {
+      "Value": Object {
+        "Ref": "AWS::Region",
+      },
+    },
   },
   "Parameters": Object {
     "AssetParameters20e06317b2e4aa8c9a1052d2e0f40d4c738bc91399a9ea24aa2b1e013bfe584bArtifactHash6D2CA43C": Object {
