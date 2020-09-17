@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.0.22 (2020-09-17)
+
+
+### Features
+
+* **core:** create ASG with launch template ([#23](https://github.com/aws-samples/aws-cdk-for-k3scluster/issues/23)) ([994dcda](https://github.com/aws-samples/aws-cdk-for-k3scluster/commit/994dcda5d8f9ea98fc6bffc14f0162eb0b582b83))
+
 ### 0.0.21 (2020-09-17)
 
 ### 0.0.20 (2020-09-17)
