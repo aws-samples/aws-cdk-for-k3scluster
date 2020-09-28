@@ -5045,10 +5045,10 @@ progress@^2.0.0:
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
-projen@^0.3.74:
-  version "0.3.74"
-  resolved "https://registry.yarnpkg.com/projen/-/projen-0.3.74.tgz#160fec82635cb22702864fca7e57968ed983fb85"
-  integrity sha512-0+LrXj5yNlbR/++n3ViqqUb2/PqhZIiZtDAc0H0C63WKKh1Qr/iWiEZSNJjCMKS62PN6Myc0a7N7m1Q0EilazQ==
+projen@^0.3.75:
+  version "0.3.75"
+  resolved "https://registry.yarnpkg.com/projen/-/projen-0.3.75.tgz#dfdfd94c235687033505b0bfdda07ef7a89f4963"
+  integrity sha512-C1tt7ZpGmsSDOT8Os9w/Eqqd5d1HnC80ncsO8+Fst98JEwT4L1T0nojUJ5mWPWjW1dVO7iDBQqrfG28zAjpeKA==
   dependencies:
     chalk "^4.1.0"
     decamelize "^4.0.0"
