@@ -1,47 +1,47 @@
-import * as cdk from '@aws-cdk/core';
-import * as ec2 from '@aws-cdk/aws-ec2';
-import * as s3 from '@aws-cdk/aws-s3';
-import * as iam from '@aws-cdk/aws-iam';
+import * as path from 'path';
 import * as autoscaling from '@aws-cdk/aws-autoscaling';
+import * as ec2 from '@aws-cdk/aws-ec2';
+import * as iam from '@aws-cdk/aws-iam';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as logs from '@aws-cdk/aws-logs';
+import * as s3 from '@aws-cdk/aws-s3';
+import * as cdk from '@aws-cdk/core';
 import * as cr from '@aws-cdk/custom-resources';
-import * as path from 'path';
 
-const DEFAULT_INSTANCE_TYPE = ec2.InstanceType.of(ec2.InstanceClass.M6G, ec2.InstanceSize.MEDIUM)
+const DEFAULT_INSTANCE_TYPE = ec2.InstanceType.of(ec2.InstanceClass.M6G, ec2.InstanceSize.MEDIUM);
 
 export interface ClusterProps {
   /**
    * VPC
-   * 
+   *
    * @default - create new VPC
    */
   readonly vpc?: ec2.IVpc;
 
   /**
    * Run worker nodes as EC2 Spot
-   * 
-   * @default true 
+   *
+   * @default true
    */
   readonly spotWorkerNodes?: boolean;
 
   /**
    * control plane node ec2 instance type
-   * 
+   *
    * @default mg6.medium
    */
   readonly controlPlaneInstanceType?: ec2.InstanceType;
-    
+
   /**
    * worker node instance type
-   * 
+   *
    * @default mg6.medium
    */
   readonly workerInstanceType?: ec2.InstanceType;
 
   /**
    * minimal number of worker nodes
-   * 
+   *
    * @default 3
    */
   readonly workerMinCapacity?: number;
@@ -49,7 +49,7 @@ export interface ClusterProps {
   /**
    * The bucket removal policy. When specicified as `DESTROY`, the S3 bucket for the cluster state
    * will be completely removed on stack destroy.
-   * 
+   *
    * @default - cdk.RemovalPolicy.RETAIN
    */
   readonly bucketRemovalPolicy?: cdk.RemovalPolicy;
@@ -69,7 +69,7 @@ export class Cluster extends cdk.Construct {
    * The instance type of the worker node
    */
   readonly workerInstanceType: ec2.InstanceType;
-  
+
   /**
    * The endpoint URL of the control plan
    */
@@ -79,54 +79,54 @@ export class Cluster extends cdk.Construct {
     super(scope, id);
 
     // VPC configuration
-    const vpc = props.vpc ?? new ec2.Vpc(this, 'Vpc', { maxAzs:3, natGateways: 1})
-    
-    // S3 bucket to host K3s token + kubeconfig file 
+    const vpc = props.vpc ?? new ec2.Vpc(this, 'Vpc', { maxAzs: 3, natGateways: 1 });
+
+    // S3 bucket to host K3s token + kubeconfig file
     const k3sBucket = new s3.Bucket(this, 'k3sBucket', {
       removalPolicy: props.bucketRemovalPolicy ?? cdk.RemovalPolicy.RETAIN,
     });
 
     // Delete S3 Object CustomResource
-    if(props.bucketRemovalPolicy === cdk.RemovalPolicy.DESTROY){
+    if (props.bucketRemovalPolicy === cdk.RemovalPolicy.DESTROY) {
       const onEvent = new lambda.Function(this, 'onEventHandler', {
         runtime: lambda.Runtime.PYTHON_3_8,
         code: lambda.Code.fromAsset(path.join(__dirname, '../custom-resource-handler')),
         handler: 'index.on_event',
       });
-  
+
       const deleteS3ObjectProvider = new cr.Provider(this, 'deleteS3ObjectProvider', {
         onEventHandler: onEvent,
         logRetention: logs.RetentionDays.ONE_DAY,
       });
-  
+
       const CRdeleteS3ObjectProvider = new cdk.CustomResource(this, 'CRdeleteS3ObjectProvider', {
         serviceToken: deleteS3ObjectProvider.serviceToken,
         properties: {
           Bucket: k3sBucket.bucketName,
         },
       });
-  
-      CRdeleteS3ObjectProvider.node.addDependency(k3sBucket)
-  
+
+      CRdeleteS3ObjectProvider.node.addDependency(k3sBucket);
+
       k3sBucket.grantDelete(onEvent);
       k3sBucket.grantReadWrite(onEvent);
     }
 
-    // control plane node Security Group      
+    // control plane node Security Group
     const k3scontrolplanesg = new ec2.SecurityGroup(this, 'k3s-controlplane-SG', { vpc });
     k3scontrolplanesg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(22), 'SSH');
     k3scontrolplanesg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(6443), 'K3s port');
 
-    // worker nodes Security Group      
+    // worker nodes Security Group
     const k3sworkersg = new ec2.SecurityGroup(this, 'k3s-worker-SG', { vpc });
-    // for this prototype the workers are being placed in a public subnet 
-    // ideally they should land on a private subnet 
-    /// also ingress traffic - ssh (bastion style) or 6443 - should come from the control plane node only 
-    k3sworkersg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(22), 'SSH')
+    // for this prototype the workers are being placed in a public subnet
+    // ideally they should land on a private subnet
+    /// also ingress traffic - ssh (bastion style) or 6443 - should come from the control plane node only
+    k3sworkersg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(22), 'SSH');
     k3sworkersg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(6443), 'K3s port');
 
     // check if the user requires a particular instance type for workers and control plane
-    // if not, the default instance type is used 
+    // if not, the default instance type is used
     this.controlPlaneInstanceType = props.controlPlaneInstanceType ?? DEFAULT_INSTANCE_TYPE;
     this.workerInstanceType = props.workerInstanceType ?? DEFAULT_INSTANCE_TYPE;
 
@@ -141,7 +141,7 @@ export class Cluster extends cdk.Construct {
       instanceName: 'k3s-controlplane',
       securityGroup: k3scontrolplanesg,
     });
-    
+
     k3scontrolplane.addUserData(`
        #!/bin/bash
        curl -L -o k3s https://github.com/rancher/k3s/releases/download/v1.16.9%2Bk3s1/k3s-arm64
@@ -155,8 +155,8 @@ export class Cluster extends cdk.Construct {
        aws s3 cp /etc/rancher/k3s/kubeconfig.yaml s3://${k3sBucket.bucketName}/kubeconfig.yaml
      `);
 
-    
-    this.endpointUri = k3scontrolplane.instancePublicIp
+
+    this.endpointUri = k3scontrolplane.instancePublicIp;
 
     // create launch template for worker ASG
     // prepare the userData
@@ -184,42 +184,42 @@ export class Cluster extends cdk.Construct {
         userData: cdk.Fn.base64(userData.render()),
       },
     });
-    
+
     // create worker ASG
-    const workerAsg = new autoscaling.AutoScalingGroup(this, 'WorkerAsg', { 
+    const workerAsg = new autoscaling.AutoScalingGroup(this, 'WorkerAsg', {
       instanceType: this.workerInstanceType,
       machineImage: new AmiProvider().amiId,
       vpc,
       vpcSubnets: {
-        subnetType: ec2.SubnetType.PUBLIC, 
+        subnetType: ec2.SubnetType.PUBLIC,
       },
       minCapacity: props.workerMinCapacity ?? 3,
-    })
+    });
 
     const cfnAsg = workerAsg.node.tryFindChild('ASG') as autoscaling.CfnAutoScalingGroup;
     cfnAsg.addPropertyDeletionOverride('LaunchConfigurationName');
     cfnAsg.addPropertyOverride('LaunchTemplate', {
       LaunchTemplateId: lt.ref,
       Version: lt.attrLatestVersionNumber,
-    })
+    });
 
-    workerAsg.addSecurityGroup(k3sworkersg)
-    
+    workerAsg.addSecurityGroup(k3sworkersg);
+
     // enable the SSM session manager
-    workerAsg.role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMManagedInstanceCore'))
+    workerAsg.role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMManagedInstanceCore'));
 
     // grant the S3 write permission to the control plane node and read permissions to the worker nodes
-    k3sBucket.grantWrite(k3scontrolplane.role)
-    k3sBucket.grantRead(workerAsg.role)
+    k3sBucket.grantWrite(k3scontrolplane.role);
+    k3sBucket.grantRead(workerAsg.role);
 
     // endpoint info
-    new cdk.CfnOutput(this, 'Endpoint', { value: `https://${k3scontrolplane.instancePublicIp}:6443`})
+    new cdk.CfnOutput(this, 'Endpoint', { value: `https://${k3scontrolplane.instancePublicIp}:6443` });
 
     // kubeconfig.yaml path
     new cdk.CfnOutput(this, 'Kubernetes configuration file', { value: `s3://${k3sBucket.bucketName}/kubeconfig.yaml` });
 
-    workerAsg.node.addDependency(k3scontrolplane)
-  }  
+    workerAsg.node.addDependency(k3scontrolplane);
+  }
 }
 
 /**
@@ -230,7 +230,7 @@ export class AmiProvider {
     return ec2.MachineImage.latestAmazonLinux({
       cpuType: ec2.AmazonLinuxCpuType.ARM_64,
       generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
-    })
+    });
   }
 }
 
@@ -244,6 +244,6 @@ export class VpcProvider {
       scope.node.tryGetContext('use_vpc_id') ?
         ec2.Vpc.fromLookup(scope, 'Vpc', { vpcId: scope.node.tryGetContext('use_vpc_id') }) :
         new ec2.Vpc(scope, 'Vpc', { maxAzs: 3, natGateways: 1 });
-    return vpc    
+    return vpc;
   }
 }
