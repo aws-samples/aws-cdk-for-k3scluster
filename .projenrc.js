@@ -1,4 +1,6 @@
-const { ConstructLibraryAws } = require('projen');
+const {
+  ConstructLibraryAws
+} = require('projen');
 
 const AWS_CDK_LATEST_RELEASE = '1.62.0';
 const PROJECT_NAME = 'cdk-k3s-cluster';
@@ -20,14 +22,16 @@ const project = new ConstructLibraryAws({
     'graviton',
     'spot'
   ],
+  dependabot: false,
+
   catalog: {
     twitter: 'mreferre',
     announce: false
   },
-  
+
   // creates PRs for projen upgrades
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
-  
+
   cdkVersion: AWS_CDK_LATEST_RELEASE,
   cdkDependencies: [
     '@aws-cdk/core',
@@ -39,7 +43,7 @@ const project = new ConstructLibraryAws({
     '@aws-cdk/aws-logs',
     '@aws-cdk/aws-lambda',
   ],
-  
+
   python: {
     distName: 'cdk-k3s-cluster',
     module: 'cdk_k3s_cluster'
