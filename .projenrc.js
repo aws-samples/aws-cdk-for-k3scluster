@@ -1,12 +1,12 @@
 const {
-  ConstructLibraryAws
+  AwsCdkConstructLibrary
 } = require('projen');
 
 const AWS_CDK_LATEST_RELEASE = '1.62.0';
 const PROJECT_NAME = 'cdk-k3s-cluster';
 const PROJECT_DESCRIPTION = 'A JSII construct lib to deploy a K3s cluster on AWS with CDK';
 
-const project = new ConstructLibraryAws({
+const project = new AwsCdkConstructLibrary({
   "authorName": "Massimo Re Ferre",
   "authorEmail": "mreferre@amazon.com",
   "name": "cdk-k3s-cluster",
@@ -23,6 +23,8 @@ const project = new ConstructLibraryAws({
     'spot'
   ],
   dependabot: false,
+  // upgrade every Sunday 6AM
+  projenUpgradeSchedule: ['0 6 * * 0'],
 
   catalog: {
     twitter: 'mreferre',
