@@ -1,7 +1,7 @@
 name: YarnUpgrade
 on:
   schedule:
-    - cron: 10 6 * * 0
+    - cron: 0 7 * * 0
   workflow_dispatch: {}
 jobs:
   upgrade:
@@ -22,10 +22,11 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: "chore: yarn upgradae"
           branch: auto/yarn-upgrade
           title: "chore: yarn upgrade"
           body: This PR runs the yarn upgrade
+          labels: auto-merge
     container:
       image: jsii/superchain
