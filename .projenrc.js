@@ -23,17 +23,11 @@ const project = new AwsCdkConstructLibrary({
     'spot'
   ],
   dependabot: false,
-  // upgrade every Sunday 6AM
-  projenUpgradeSchedule: ['0 6 * * 0'],
-
+  releaseBranches: ['master'],
   catalog: {
     twitter: 'mreferre',
     announce: false
   },
-
-  // creates PRs for projen upgrades
-  projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
-
   cdkVersion: AWS_CDK_LATEST_RELEASE,
   cdkDependencies: [
     '@aws-cdk/core',
