@@ -47,6 +47,7 @@ cdk.out
 cdk.context.json
 images
 yarn-error.log
+!/.projen/tasks.json
 !/package.json
 !/.npmignore
 !/LICENSE
@@ -58,6 +59,7 @@ yarn-error.log
 !/.github/workflows/release.yml
 !/.mergify.yml
 !/.github/pull_request_template.md
+!/.github/workflows/rebuild-bot.yml
 !/src
 !/tsconfig.jest.json
 !/.eslintrc.json
