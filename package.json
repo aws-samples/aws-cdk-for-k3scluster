@@ -47,7 +47,7 @@
     "jsii-pacmak": "^1.11.0",
     "jsii-release": "^0.1.6",
     "json-schema": "^0.2.5",
-    "projen": "^0.12.9",
+    "projen": "^0.14.4",
     "standard-version": "^9.0.0",
     "ts-jest": "^26.1.0",
     "typescript": "^3.9.5"
@@ -86,8 +86,18 @@
   "license": "MIT",
   "version": "0.0.48",
   "jest": {
+    "testMatch": [
+      "**/__tests__/**/*.ts?(x)",
+      "**/?(*.)+(spec|test).ts?(x)"
+    ],
     "clearMocks": true,
     "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "clover",
+      "text"
+    ],
     "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
@@ -95,9 +105,8 @@
     "testPathIgnorePatterns": [
       "/node_modules/"
     ],
-    "testMatch": [
-      "**/__tests__/**/*.ts?(x)",
-      "**/?(*.)+(spec|test).ts?(x)"
+    "watchPathIgnorePatterns": [
+      "/node_modules/"
     ],
     "reporters": [
       "default",
