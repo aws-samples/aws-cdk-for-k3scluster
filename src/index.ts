@@ -171,19 +171,6 @@ export class Cluster extends cdk.Construct {
           (./k3s agent --server https://${k3scontrolplane.instancePrivateIp}:6443 \
           --token $(cat /node-token) 2>&1 | tee -a $LOGFILE || echo "failed" > $LOGFILE &)
     `);
-    const lt = new ec2.CfnLaunchTemplate(this, 'WorkerLaunchTemplate', {
-      launchTemplateData: {
-        imageId: new AmiProvider().amiId.getImage(this).imageId,
-        instanceType: this.workerInstanceType.toString(),
-        instanceMarketOptions: {
-          marketType: props.spotWorkerNodes ? 'spot' : undefined,
-          spotOptions: props.spotWorkerNodes ? {
-            spotInstanceType: 'one-time',
-          } : undefined,
-        },
-        userData: cdk.Fn.base64(userData.render()),
-      },
-    });
 
     // create worker ASG
     const workerAsg = new autoscaling.AutoScalingGroup(this, 'WorkerAsg', {
@@ -196,6 +183,23 @@ export class Cluster extends cdk.Construct {
       minCapacity: props.workerMinCapacity ?? 3,
     });
 
+    const cfnInstanceProfile = workerAsg.node.tryFindChild('InstanceProfile') as iam.CfnInstanceProfile
+    const lt = new ec2.CfnLaunchTemplate(this, 'WorkerLaunchTemplate', {
+      launchTemplateData: {
+        imageId: new AmiProvider().amiId.getImage(this).imageId,
+        instanceType: this.workerInstanceType.toString(),
+        instanceMarketOptions: {
+          marketType: props.spotWorkerNodes ? 'spot' : undefined,
+          spotOptions: props.spotWorkerNodes ? {
+            spotInstanceType: 'one-time',
+          } : undefined,
+        },
+        userData: cdk.Fn.base64(userData.render()),
+        iamInstanceProfile: {
+          arn: cfnInstanceProfile.attrArn,
+        },
+      },
+    });
     const cfnAsg = workerAsg.node.tryFindChild('ASG') as autoscaling.CfnAutoScalingGroup;
     cfnAsg.addPropertyDeletionOverride('LaunchConfigurationName');
     cfnAsg.addPropertyOverride('LaunchTemplate', {
