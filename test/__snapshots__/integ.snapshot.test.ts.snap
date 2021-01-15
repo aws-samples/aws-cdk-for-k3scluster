@@ -343,6 +343,14 @@ Object {
     "ClusterWorkerLaunchTemplate84D2244A": Object {
       "Properties": Object {
         "LaunchTemplateData": Object {
+          "IamInstanceProfile": Object {
+            "Arn": Object {
+              "Fn::GetAtt": Array [
+                "ClusterWorkerAsgInstanceProfile3B8CC231",
+                "Arn",
+              ],
+            },
+          },
           "ImageId": Object {
             "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter",
           },

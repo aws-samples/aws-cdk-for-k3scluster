@@ -183,7 +183,7 @@ export class Cluster extends cdk.Construct {
       minCapacity: props.workerMinCapacity ?? 3,
     });
 
-    const cfnInstanceProfile = workerAsg.node.tryFindChild('InstanceProfile') as iam.CfnInstanceProfile
+    const cfnInstanceProfile = workerAsg.node.tryFindChild('InstanceProfile') as iam.CfnInstanceProfile;
     const lt = new ec2.CfnLaunchTemplate(this, 'WorkerLaunchTemplate', {
       launchTemplateData: {
         imageId: new AmiProvider().amiId.getImage(this).imageId,
