@@ -24,6 +24,7 @@ const project = new AwsCdkConstructLibrary({
   ],
   dependabot: false,
   releaseBranches: ['master'],
+  defaultReleaseBranch: 'master',
   catalog: {
     twitter: 'mreferre',
     announce: false,
