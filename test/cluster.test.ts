@@ -40,11 +40,6 @@ test('add s3 removalPolicy', () => {
     bucketRemovalPolicy: RemovalPolicy.DESTROY,
   });
   expect(stack).toHaveResource('AWS::S3::Bucket');
-  expect(stack).toHaveResource('AWS::CloudFormation::CustomResource', {
-    Bucket: {
-      Ref: 'Clusters3removalPolicyk3sBucket7F058C67',
-    },
-  });
 });
 
 test('support m6g instance types', () => {
