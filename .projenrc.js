@@ -40,7 +40,9 @@ const project = new AwsCdkConstructLibrary({
     '@aws-cdk/aws-logs',
     '@aws-cdk/aws-lambda',
   ],
-
+  devDeps: [
+    'xmldom',
+  ],
   python: {
     distName: 'cdk-k3s-cluster',
     module: 'cdk_k3s_cluster',
