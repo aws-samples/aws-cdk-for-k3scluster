@@ -699,6 +699,18 @@ Object {
             ],
           },
         },
+        "Description": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "Lambda function for auto-deleting objects in ",
+              Object {
+                "Ref": "Clusterk3sBucket0ECC11AD",
+              },
+              " S3 bucket.",
+            ],
+          ],
+        },
         "Handler": "__entrypoint__.handler",
         "MemorySize": 128,
         "Role": Object {
