@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.50](https://github.com/aws-samples/aws-cdk-for-k3scluster/compare/v0.0.47...v0.0.50) (2021-03-16)
+
+
+### Bug Fixes
+
+* invalid iam profile ([4324820](https://github.com/aws-samples/aws-cdk-for-k3scluster/commit/43248202fdd81b45d1263ec72e2e8907e738601b))
+* projen now requires defaultReleaseBranch ([4566cdc](https://github.com/aws-samples/aws-cdk-for-k3scluster/commit/4566cdcd92dfb5ffd61f171880f65004357e00d1))
+* remove-custom-resource ([3d0c765](https://github.com/aws-samples/aws-cdk-for-k3scluster/commit/3d0c76595287e85e9cfca66084af3b08daddb3be))
+
 ### 0.0.48 (2020-11-28)
 
 ### 0.0.47 (2020-10-19)
