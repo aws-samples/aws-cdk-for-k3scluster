@@ -89,10 +89,6 @@
       "type": "build"
     },
     {
-      "name": "xmldom",
-      "type": "build"
-    },
-    {
       "name": "@aws-cdk/aws-autoscaling",
       "version": "^1.62.0",
       "type": "peer"
