@@ -22,6 +22,9 @@ const project = new AwsCdkConstructLibrary({
     'graviton',
     'spot',
   ],
+  autoApproveOptions: {
+    secret: 'PROJEN_GITHUB_TOKEN'
+  },
   dependabot: false,
   defaultReleaseBranch: 'master',
   catalog: {
