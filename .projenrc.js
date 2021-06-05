@@ -23,7 +23,7 @@ const project = new AwsCdkConstructLibrary({
     'spot',
   ],
   autoApproveOptions: {
-    secret: 'PROJEN_GITHUB_TOKEN'
+    secret: 'PROJEN_GITHUB_TOKEN',
   },
   dependabot: false,
   defaultReleaseBranch: 'master',
