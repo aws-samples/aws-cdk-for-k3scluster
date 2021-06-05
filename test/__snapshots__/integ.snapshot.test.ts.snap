@@ -61,6 +61,10 @@ Object {
       "Description": "S3 key for asset version \\"4cd61014b71160e8c66fe167e43710d5ba068b80b134e9bd84508cf9238b2392\\"",
       "Type": "String",
     },
+    "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter": Object {
+      "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-arm64-gp2",
+      "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+    },
   },
   "Resources": Object {
     "ClusterWorkerAsgASGFC685DD3": Object {
@@ -269,7 +273,9 @@ Object {
         "IamInstanceProfile": Object {
           "Ref": "ClusterWorkerAsgInstanceProfile3B8CC231",
         },
-        "ImageId": "{{resolve:ssm:/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-arm64-gp2}}",
+        "ImageId": Object {
+          "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter",
+        },
         "InstanceType": "m6g.medium",
         "SecurityGroups": Array [
           Object {
@@ -302,7 +308,9 @@ Object {
               ],
             },
           },
-          "ImageId": "{{resolve:ssm:/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-arm64-gp2}}",
+          "ImageId": Object {
+            "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter",
+          },
           "InstanceMarketOptions": Object {
             "MarketType": "spot",
             "SpotOptions": Object {
@@ -441,7 +449,9 @@ Object {
         "IamInstanceProfile": Object {
           "Ref": "Clusterk3scontrolplaneInstanceProfile86CC8202",
         },
-        "ImageId": "{{resolve:ssm:/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-arm64-gp2}}",
+        "ImageId": Object {
+          "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmarm64gp2C96584B6F00A464EAD1953AFF4B05118Parameter",
+        },
         "InstanceType": "m6g.medium",
         "SecurityGroupIds": Array [
           Object {
