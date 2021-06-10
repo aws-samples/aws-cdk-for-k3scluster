@@ -1,10 +1,12 @@
 const {
   AwsCdkConstructLibrary,
+  DependenciesUpgradeMechanism
 } = require('projen');
 
 const AWS_CDK_LATEST_RELEASE = '1.62.0';
 const PROJECT_NAME = 'cdk-k3s-cluster';
 const PROJECT_DESCRIPTION = 'A JSII construct lib to deploy a K3s cluster on AWS with CDK';
+const AUTOMATION_TOKEN = 'PROJEN_GITHUB_TOKEN';
 
 const project = new AwsCdkConstructLibrary({
   authorName: 'Massimo Re Ferre',
@@ -25,7 +27,16 @@ const project = new AwsCdkConstructLibrary({
   autoApproveOptions: {
     secret: 'PROJEN_GITHUB_TOKEN',
   },
-  dependabot: false,
+  depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow({
+    workflowOptions: {
+      labels: ['auto-approve', 'auto-merge'],
+      secret: AUTOMATION_TOKEN,
+    },
+  }),
+  autoApproveOptions: {
+    secret: 'GITHUB_TOKEN',
+    allowedUsernames: [ 'mreferre', 'pahud'],
+  },
   defaultReleaseBranch: 'master',
   catalog: {
     twitter: 'mreferre',
@@ -47,6 +58,11 @@ const project = new AwsCdkConstructLibrary({
     module: 'cdk_k3s_cluster',
   },
 });
+
+project.package.addField('resolutions', {
+  'trim-newlines': '3.0.1',
+});
+
 
 const common_exclude = ['cdk.out', 'cdk.context.json', 'images', 'yarn-error.log'];
 project.npmignore.exclude(...common_exclude);
