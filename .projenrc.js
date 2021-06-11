@@ -1,6 +1,6 @@
 const {
   AwsCdkConstructLibrary,
-  DependenciesUpgradeMechanism
+  DependenciesUpgradeMechanism,
 } = require('projen');
 
 const AWS_CDK_LATEST_RELEASE = '1.62.0';
@@ -35,7 +35,7 @@ const project = new AwsCdkConstructLibrary({
   }),
   autoApproveOptions: {
     secret: 'GITHUB_TOKEN',
-    allowedUsernames: [ 'mreferre', 'pahud'],
+    allowedUsernames: ['mreferre', 'pahud'],
   },
   defaultReleaseBranch: 'master',
   catalog: {
