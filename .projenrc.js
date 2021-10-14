@@ -1,6 +1,7 @@
 const {
   AwsCdkConstructLibrary,
-  DependenciesUpgradeMechanism,
+  DevEnvironmentDockerImage,
+  Gitpod,
 } = require('projen');
 
 const AWS_CDK_LATEST_RELEASE = '1.62.0';
@@ -27,12 +28,13 @@ const project = new AwsCdkConstructLibrary({
   autoApproveOptions: {
     secret: 'PROJEN_GITHUB_TOKEN',
   },
-  depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow({
+  depsUpgradeOptions: {
+    ignoreProjen: true,
     workflowOptions: {
       labels: ['auto-approve', 'auto-merge'],
       secret: AUTOMATION_TOKEN,
     },
-  }),
+  },
   autoApproveOptions: {
     secret: 'GITHUB_TOKEN',
     allowedUsernames: ['mreferre', 'pahud'],
@@ -53,7 +55,6 @@ const project = new AwsCdkConstructLibrary({
     '@aws-cdk/aws-logs',
     '@aws-cdk/aws-lambda',
   ],
-  minNodeVersion: '14.17.0',
   python: {
     distName: 'cdk-k3s-cluster',
     module: 'cdk_k3s_cluster',
@@ -61,9 +62,41 @@ const project = new AwsCdkConstructLibrary({
 });
 
 project.package.addField('resolutions', {
+  'pac-resolver': '^5.0.0',
   'set-value': '^4.0.1',
+  'ansi-regex': '^5.0.1',
 });
 
+const gitpodPrebuild = project.addTask('gitpod:prebuild', {
+  description: 'Prebuild setup for Gitpod',
+});
+// install and compile only, do not test or package.
+gitpodPrebuild.exec('yarn install --frozen-lockfile --check-files');
+gitpodPrebuild.exec('npx projen compile');
+
+let gitpod = new Gitpod(project, {
+  dockerImage: DevEnvironmentDockerImage.fromImage('public.ecr.aws/pahudnet/gitpod-workspace:latest'),
+  prebuilds: {
+    addCheck: true,
+    addBadge: true,
+    addLabel: true,
+    branches: true,
+    pullRequests: true,
+    pullRequestsFromForks: true,
+  },
+});
+
+gitpod.addCustomTask({
+  init: 'yarn gitpod:prebuild',
+  // always upgrade after init
+  command: 'npx projen upgrade',
+});
+
+gitpod.addVscodeExtensions(
+  'dbaeumer.vscode-eslint',
+  'ms-azuretools.vscode-docker',
+  'AmazonWebServices.aws-toolkit-vscode',
+);
 
 const common_exclude = ['cdk.out', 'cdk.context.json', 'images', 'yarn-error.log'];
 project.npmignore.exclude(...common_exclude);
