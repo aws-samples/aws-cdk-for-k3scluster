@@ -1202,9 +1202,9 @@
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
 "@types/node@*":
-  version "17.0.24"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.24.tgz#20ba1bf69c1b4ab405c7a01e950c4f446b05029f"
-  integrity sha512-aveCYRQbgTH9Pssp1voEP7HiuWlD2jW2BO56w+bVrJn04i61yh6mRfoKO6hEYQD9vF+W8Chkwc6j1M36uPkx4g==
+  version "17.0.25"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.25.tgz#527051f3c2f77aa52e5dc74e45a3da5fb2301448"
+  integrity sha512-wANk6fBrUwdpY4isjWrKTufkrXdu1D2YHCot2fD/DfWxF5sMrVSA+KN7ydckvaTCh0HiqX9IVl0L5/ZoXg5M7w==
 
 "@types/node@^10.17.60":
   version "10.17.60"
@@ -2122,9 +2122,9 @@ console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   integrity sha1-PXz0Rk22RG6mRL9LOVB/mFEAjo4=
 
 constructs@^3.3.69:
-  version "3.3.270"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.3.270.tgz#e74a10e4564cdf18f231ecb1270d4f0074e8b1be"
-  integrity sha512-oRxTHcNzdVh/JhOyaylZFxUJzBi7jKNywDdmKTlKwb50vP+CSgQ7GqM1+sfBy/5bZQkYc3qsVdkwzQ+qdjHVfQ==
+  version "3.3.271"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.3.271.tgz#5b4bdb6d5d8a9103b60202bb0ef1a9de133e90ea"
+  integrity sha512-E2/3In40qxeLcG7yyYXOgKLfFiv5NKKeuFFopvcafAJK0PCQa9fKquQuLo4Vv9oE/ea7mrsJvaz9DOzj9ZcWDg==
 
 conventional-changelog-angular@^5.0.12:
   version "5.0.13"
@@ -2642,9 +2642,9 @@ ecc-jsbn@~0.1.1:
     safer-buffer "^2.1.0"
 
 electron-to-chromium@^1.4.84:
-  version "1.4.111"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.111.tgz#897613f6504f3f17c9381c7499a635b413e4df4e"
-  integrity sha512-/s3+fwhKf1YK4k7btOImOzCQLpUjS6MaPf0ODTNuT4eTM1Bg4itBpLkydhOzJmpmH6Z9eXFyuuK5czsmzRzwtw==
+  version "1.4.112"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.112.tgz#ae3a46231d4b2cdc223d6c4d227c06a9a96da7c2"
+  integrity sha512-BN5xdtPMlqUHo74daNNp/PwAGs4homs2RFxTB668wwkv7HAMvOY4L16Y5QrFxh69T2H2f1xWg8zQfrCDnpkvrA==
 
 emittery@^0.7.1:
   version "0.7.2"
