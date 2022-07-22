@@ -1387,9 +1387,9 @@ acorn@^7.1.1, acorn@^7.4.0:
   integrity sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==
 
 acorn@^8.2.4:
-  version "8.7.1"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.7.1.tgz#0197122c843d1bf6d0a5e83220a788f278f63c30"
-  integrity sha512-Xx54uLJQZ19lKygFXOWsscKUbsBZW0CPykPhVQdhIeIwrbPmJzqeASDInc8nKBnp/JT6igTs82qPXz069H8I/A==
+  version "8.8.0"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.0.tgz#88c0187620435c7f6015803f5539dae05a9dbea8"
+  integrity sha512-QOxyigPVrpZ2GXT+PFyZTl6TtOFc5egxHIP9IlQ+RbupQuX4RkT/Bee4/kQuC02Xkzg84JcT7oLYtDIQxp+v7w==
 
 acorn@^8.7.0:
   version "8.7.0"
@@ -1889,9 +1889,9 @@ camelcase@^6.0.0, camelcase@^6.2.0, camelcase@^6.3.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001366:
-  version "1.0.30001367"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001367.tgz#2b97fe472e8fa29c78c5970615d7cd2ee414108a"
-  integrity sha512-XDgbeOHfifWV3GEES2B8rtsrADx4Jf+juKX2SICJcaUhjYBO3bR96kvEIHa15VU6ohtOhBZuPGGYGbXMRn0NCw==
+  version "1.0.30001368"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001368.tgz#c5c06381c6051cd863c45021475434e81936f713"
+  integrity sha512-wgfRYa9DenEomLG/SdWgQxpIyvdtH3NW8Vq+tB6AwR9e56iOIcu1im5F/wNdDf04XlKHXqIx4N8Jo0PemeBenQ==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -2143,9 +2143,9 @@ console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   integrity sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==
 
 constructs@^3.3.69:
-  version "3.4.44"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.4.44.tgz#84e22c5170ef23b0481d341389efdfb7665c88e9"
-  integrity sha512-05UKLy9nINPY814yFU5I77v2Jz8rPOFLDLERvrTvy7SsjnITPwmlfF7MwMacv1iJ2QSGn0a7RHKGFlFaonP7SA==
+  version "3.4.45"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.4.45.tgz#6ecef9a128e5a53c3f7077c99d2e77583cee5d46"
+  integrity sha512-frkPbRa2/5KILm3R2oFmWKXplBQlR8SoPMv0eaRpiKvc+3QrPcZq99AQ7RRBWTYENqHp7QxJGky1B/jBlxLT1A==
 
 conventional-changelog-angular@^5.0.12:
   version "5.0.13"
@@ -2401,9 +2401,9 @@ data-urls@^2.0.0:
     whatwg-url "^8.0.0"
 
 date-format@^4.0.10, date-format@^4.0.11:
-  version "4.0.11"
-  resolved "https://registry.yarnpkg.com/date-format/-/date-format-4.0.11.tgz#ae0d1e069d7f0687938fd06f98c12f3a6276e526"
-  integrity sha512-VS20KRyorrbMCQmpdl2hg5KaOUsda1RbnsJg461FfrcyCUg+pkd0b40BSW4niQyTheww4DBXQnS7HwSrKkipLw==
+  version "4.0.12"
+  resolved "https://registry.yarnpkg.com/date-format/-/date-format-4.0.12.tgz#82c3607e33f8d25fa25b3415b565fe726a34574d"
+  integrity sha512-L018twW1B6J49/vmoxFSWTwKfUaKJI42cJ2xz1WeNSKaS4uVN5D44f3KfEuYUlZvFybWDJt6YuqVDPZp+IIF/g==
 
 dateformat@^3.0.0:
   version "3.0.3"
@@ -2633,9 +2633,9 @@ ecc-jsbn@~0.1.1:
     safer-buffer "^2.1.0"
 
 electron-to-chromium@^1.4.188:
-  version "1.4.195"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.195.tgz#139b2d95a42a3f17df217589723a1deac71d1473"
-  integrity sha512-vefjEh0sk871xNmR5whJf9TEngX+KTKS3hOHpjoMpauKkwlGwtMz1H8IaIjAT/GNnX0TbGwAdmVoXCAzXf+PPg==
+  version "1.4.197"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.197.tgz#172054244cca16320ebc19459bd03d8a9018ff73"
+  integrity sha512-7EZCIDDraA2NUaHewLaAh6T63cZzgBmgDx/iiaeZ/pjSs36bOFEJ3hLIrn1TKCFhV0PEZZKu6qFPrxa/LGAzLg==
 
 emittery@^0.7.1:
   version "0.7.2"
@@ -3448,9 +3448,9 @@ globals@^11.1.0:
   integrity sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==
 
 globals@^13.6.0, globals@^13.9.0:
-  version "13.16.0"
-  resolved "https://registry.yarnpkg.com/globals/-/globals-13.16.0.tgz#9be4aca28f311aaeb974ea54978ebbb5e35ce46a"
-  integrity sha512-A1lrQfpNF+McdPOnnFqY3kSN0AFTy485bTi1bkLk4mVPODIUEcSfhHgRqA+QdXPksrSTTztYXx37NFV+GpGk3Q==
+  version "13.17.0"
+  resolved "https://registry.yarnpkg.com/globals/-/globals-13.17.0.tgz#902eb1e680a41da93945adbdcb5a9f361ba69bd4"
+  integrity sha512-1C+6nQRb1GwGMKm2dH/E7enFAMxGTmGI7/dEdhy/DNelv85w9B72t3uc5frtMNXIbzrarJJ/lTCjcaZwbLJmyw==
   dependencies:
     type-fest "^0.20.2"
 
