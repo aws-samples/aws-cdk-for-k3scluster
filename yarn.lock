@@ -1895,9 +1895,9 @@ camelcase@^6.0.0, camelcase@^6.2.0, camelcase@^6.3.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001400:
-  version "1.0.30001419"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001419.tgz#3542722d57d567c8210d5e4d0f9f17336b776457"
-  integrity sha512-aFO1r+g6R7TW+PNQxKzjITwLOyDhVRLjW0LcwS/HCZGUUKTGNp9+IwLC4xyDSZBygVL/mxaFR3HIV6wEKQuSzw==
+  version "1.0.30001420"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001420.tgz#f62f35f051e0b6d25532cf376776d41e45b47ef6"
+  integrity sha512-OnyeJ9ascFA9roEj72ok2Ikp7PHJTKubtEJIQ/VK3fdsS50q4KWy+Z5X0A1/GswEItKX0ctAp8n4SYDE7wTu6A==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -2149,9 +2149,9 @@ console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   integrity sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==
 
 constructs@^3.3.69:
-  version "3.4.123"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.4.123.tgz#669414bff2773ef08802e6a207359672459f5b86"
-  integrity sha512-m4iO8HQaxSJs8X7LhmTa1FEbzRHsWFP96ms4tvZDmbw+12mYNB//DOHZ51TusmNqP0P8NR/FXSj4eCmiPdX1MA==
+  version "3.4.124"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.4.124.tgz#0be1870a871a1ab5a9fad13ff2b05abaeee992da"
+  integrity sha512-BQWs0ozn/l6g6Au6LL3bvT9WIBL6IN1fB4CtyTm7eaftnIxwOlGwJyS6pr9SDrDCMg7jbReCb4awq8cTAz6zgA==
 
 conventional-changelog-angular@^5.0.12:
   version "5.0.13"
