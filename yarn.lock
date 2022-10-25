@@ -1230,9 +1230,9 @@
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
 "@types/node@*":
-  version "18.11.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.4.tgz#7017a52e18dfaad32f55eebd539993014441949c"
-  integrity sha512-BxcJpBu8D3kv/GZkx/gSMz6VnTJREBj/4lbzYOQueUOELkt8WrO6zAcSPmp9uRPEW/d+lUO8QK0W2xnS1hEU0A==
+  version "18.11.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.5.tgz#1bc94cf2f9ab5fe33353bc7c79c797dcc5325bef"
+  integrity sha512-3JRwhbjI+cHLAkUorhf8RnqUbFXajvzX4q6fMn5JwkgtuwfYtRQYI3u4V92vI6NJuTsbBQWWh3RZjFsuevyMGQ==
 
 "@types/node@^10.17.60":
   version "10.17.60"
@@ -1393,9 +1393,9 @@ acorn@^7.1.1, acorn@^7.4.0:
   integrity sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==
 
 acorn@^8.2.4:
-  version "8.8.0"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.0.tgz#88c0187620435c7f6015803f5539dae05a9dbea8"
-  integrity sha512-QOxyigPVrpZ2GXT+PFyZTl6TtOFc5egxHIP9IlQ+RbupQuX4RkT/Bee4/kQuC02Xkzg84JcT7oLYtDIQxp+v7w==
+  version "8.8.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.1.tgz#0a3f9cbecc4ec3bea6f0a80b66ae8dd2da250b73"
+  integrity sha512-7zFpHzhnqYKrkYdUjF1HI1bzd0VygEGX8lFk4k5zVMqHEoES+P+7TKI+EvLO9WVMJ8eekdO0aDEK044xTXwPPA==
 
 acorn@^8.7.0:
   version "8.7.0"
@@ -2149,9 +2149,9 @@ console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   integrity sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==
 
 constructs@^3.3.69:
-  version "3.4.132"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.4.132.tgz#1157bbf4fc37ab7952b06800299a5a6c83905a09"
-  integrity sha512-Q2h2gFc2iqNRA7TvirHsoB3BxgT2uJygpGcNba89mnjrUtXAYZu5nyG4QUQ0b7EPPUal5UpntFW5klb3+BXpWQ==
+  version "3.4.133"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.4.133.tgz#63719936f0d1c7e80a9268bde26080e3b4a5917f"
+  integrity sha512-Dw4aB4Og0sPf3CQ2WLDGOMaV7+ROqZ6bBG6q0EK9+bjk15mMj3k+NVZxxRD4iQ9/Pl+yEqgSe7VUDqwZJNf70w==
 
 conventional-changelog-angular@^5.0.12:
   version "5.0.13"
@@ -7417,9 +7417,9 @@ wordwrap@^1.0.0:
   integrity sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==
 
 workerpool@^6.2.1:
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/workerpool/-/workerpool-6.2.1.tgz#46fc150c17d826b86a008e5a4508656777e9c343"
-  integrity sha512-ILEIE97kDZvF9Wb9f6h5aXK4swSlKGUcOEGiIYb2OOu/IrDU9iwj0fD//SsA6E5ibwJxpEvhullJY4Sl4GcpAw==
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/workerpool/-/workerpool-6.3.0.tgz#82f5e5e1fb01d48f0399fe52a117c8a15cd1b972"
+  integrity sha512-2rVusseHGwxEEESx/szO2SHfi982WQavL2YlWGHsZE2ynZ4gaHT7kmCXph9k9fUivKOwx7PBn6vn4nXUxxdKcw==
 
 wrap-ansi@^6.2.0:
   version "6.2.0"
