@@ -1,15 +1,11 @@
-const {
-  AwsCdkConstructLibrary,
-  DevEnvironmentDockerImage,
-  Gitpod,
-} = require('projen');
+const { awscdk, DevEnvironmentDockerImage, Gitpod } = require('projen');
 
 const AWS_CDK_LATEST_RELEASE = '1.62.0';
 const PROJECT_NAME = 'cdk-k3s-cluster';
 const PROJECT_DESCRIPTION = 'A JSII construct lib to deploy a K3s cluster on AWS with CDK';
 const AUTOMATION_TOKEN = 'PROJEN_GITHUB_TOKEN';
 
-const project = new AwsCdkConstructLibrary({
+const project = new awscdk.AwsCdkConstructLibrary({
   authorName: 'Massimo Re Ferre',
   authorEmail: 'mreferre@amazon.com',
   name: PROJECT_NAME,
@@ -61,11 +57,11 @@ const project = new AwsCdkConstructLibrary({
   },
 });
 
-project.package.addField('resolutions', {
-  'pac-resolver': '^5.0.0',
-  'set-value': '^4.0.1',
-  'ansi-regex': '^5.0.1',
-});
+// project.package.addField('resolutions', {
+//   'pac-resolver': '^5.0.0',
+//   'set-value': '^4.0.1',
+//   'ansi-regex': '^5.0.1',
+// });
 
 const gitpodPrebuild = project.addTask('gitpod:prebuild', {
   description: 'Prebuild setup for Gitpod',
